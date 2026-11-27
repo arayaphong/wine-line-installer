@@ -75,7 +75,9 @@ The LINE payload includes 118 application DLLs. The manifest pins each file by i
 
 ## Build in a fresh checkout
 
-1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the private backup. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. Once the base release, source and build tools are available locally, the remaining build can run offline. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
+To try the rebuild, extract `line-installer-downloads-26.6.0.4004.tar.zst` and follow its `README.md` to restore the inputs into the checkout. [Reference input archive on Google Drive](https://drive.google.com/file/d/1tgjea5ZodPtXFg-5IP_zKs2-cmJGHB3b/view?usp=sharing)
+
+1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the input archive. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. Once the base release, source and build tools are available locally, the remaining build can run offline. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
 
 2. Run these commands from the project root. The first command verifies Soda, applies the Wine patches, compiles the DLLs and packages the runtime for the current build.
 
