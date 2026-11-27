@@ -21,7 +21,7 @@ Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md
 
 The bootstrapper resolves the desktop installer at download time. Its SHA-256 is `5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462`. For a byte-identical build, match the installed LINE files against the payload manifest and use the exact Wine runner archive. [LINE payload manifest](offline/phase3/payload-files.sha256) · [Wine archive checksum](offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)
 
-The Wine DLL build fetches Valve's source tag `experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee`. [Wine DLL build script](scripts/build_wine_dlls.sh) · [Project patches](patches/)
+The Wine DLL build fetches Valve's source tag `experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee`. The patch guide records the exact Soda release revision, patch order, and runner assembly commands. [Wine patch guide](patches/README.md)
 
 ### Microsoft system DLLs and catalogs
 
@@ -112,7 +112,7 @@ The clean Debian test covers offline installation, launch, colored emoji and a r
 
 - [Pinned input inventory](offline/phase1/inventory.json) and [Wine runner manifest](offline/phase1/wine-runner-manifest.json)
 - [DLL overrides, font routing and prefix provisioning](offline/phase3/install-line.sh)
-- [Wine patches](patches/) and [Bottles and Wine helper scripts](scripts/)
+- [Wine patches and their target revisions](patches/README.md) and [Bottles and Wine helper scripts](scripts/)
 - [Project progress](PROGRESS.md) and [technical notes](analysis/NOTES.md)
 
 Keep the `.run`, downloaded binaries, local Wine prefixes and account data outside Git. The optional `bash scripts/make_handoff_bundle.sh` exports the committed source files for use on a machine without GitHub access.
