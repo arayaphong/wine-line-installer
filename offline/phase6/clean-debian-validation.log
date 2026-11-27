@@ -5,33 +5,79 @@ The embedded archive failed verification.
 Verifying the embedded archive...
 Preparing Wine and LINE...
 Installing the local Debian runtime packages...
-Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-fbc7e89e1cb4
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-424c6d7d388f
 Launch as your desktop user with /usr/local/bin/line-offline
-/opt/line-offline/26.6.0.4004-fbc7e89e1cb4/wine/lib/wine/x86_64-unix/winex11.so: OK
+/opt/line-offline/26.6.0.4004-424c6d7d388f/wine/lib/wine/x86_64-unix/winex11.so: OK
 The packaged X11 driver resolves all relocations on clean Debian.
 The bundled WineGStreamer and H.264/AAC parser libraries resolve on clean Debian.
 Verified all pinned media player files in the system installation.
 Verifying the embedded archive...
 Installing the local Debian runtime packages...
-Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-fbc7e89e1cb4
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-424c6d7d388f
 Launch as your desktop user with /usr/local/bin/line-offline
 The second installation reused the same release directory.
 Added the display and input fixtures after installation.
 First launch installed the pinned media player into the new Wine prefix.
+    Noto Sans CJK JP (OpenType)    REG_SZ    NotoSansCJK-Regular.ttc
+    MS UI Gothic    REG_SZ    Noto Sans CJK JP
 0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DWrite.dll" at 00006FFFFB7F0000: builtin
 0130:trace:loaddll:build_module Loaded L"C:\\users\\line-test\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native
 first launch: confirmed the email field contains 🔮🔥🙏
+first launch: confirmed the email field contains ภาษาไทย ｊｕｎｅ 🔮🔥🙏
 Reopened LINE using its existing Wine prefix and profile files.
+    Noto Sans CJK JP (OpenType)    REG_SZ    NotoSansCJK-Regular.ttc
+    MS UI Gothic    REG_SZ    Noto Sans CJK JP
 restart launch: confirmed the email field contains 🔮🔥🙏
+restart launch: confirmed the email field contains ภาษาไทย ｊｕｎｅ 🔮🔥🙏
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+    Noto Sans CJK JP (OpenType)    REG_SZ    NotoSansCJK-Regular.ttc
+    MS UI Gothic    REG_SZ    Noto Sans CJK JP
 Updated an existing Wine prefix with the media player and preserved its profile and other plugin directory.
+update launch: confirmed the email field contains 🔮🔥🙏
+update launch: confirmed the email field contains ภาษาไทย ｊｕｎｅ 🔮🔥🙏
+X connection to :97 broken (explicit kill or server shutdown).
 The bundled LineMediaPlayer.exe opened and initialized Direct3D 11 with networking disabled.
 first launch, colored pixels at email field offset 67: 91
 first launch, colored pixels at email field offset 82: 77
 first launch, colored pixels at email field offset 96: 70
+first launch, fullwidth glyph 1 ink pixels: 13
+first launch, fullwidth glyph 2 ink pixels: 16
+first launch, fullwidth glyphs 2/1 differing pixels: 29
+first launch, fullwidth glyph 3 ink pixels: 16
+first launch, fullwidth glyphs 3/1 differing pixels: 27
+first launch, fullwidth glyphs 3/2 differing pixels: 8
+first launch, fullwidth glyph 4 ink pixels: 17
+first launch, fullwidth glyphs 4/1 differing pixels: 24
+first launch, fullwidth glyphs 4/2 differing pixels: 19
+first launch, fullwidth glyphs 4/3 differing pixels: 17
 restart launch, colored pixels at email field offset 67: 91
 restart launch, colored pixels at email field offset 82: 77
 restart launch, colored pixels at email field offset 96: 70
-PASS: single-file offline installation, bundled media player launch, prefix reuse and migration, and three colored emoji.
+restart launch, fullwidth glyph 1 ink pixels: 13
+restart launch, fullwidth glyph 2 ink pixels: 16
+restart launch, fullwidth glyphs 2/1 differing pixels: 29
+restart launch, fullwidth glyph 3 ink pixels: 16
+restart launch, fullwidth glyphs 3/1 differing pixels: 27
+restart launch, fullwidth glyphs 3/2 differing pixels: 8
+restart launch, fullwidth glyph 4 ink pixels: 17
+restart launch, fullwidth glyphs 4/1 differing pixels: 24
+restart launch, fullwidth glyphs 4/2 differing pixels: 19
+restart launch, fullwidth glyphs 4/3 differing pixels: 17
+update launch, colored pixels at email field offset 67: 91
+update launch, colored pixels at email field offset 82: 77
+update launch, colored pixels at email field offset 96: 70
+update launch, fullwidth glyph 1 ink pixels: 13
+update launch, fullwidth glyph 2 ink pixels: 16
+update launch, fullwidth glyphs 2/1 differing pixels: 29
+update launch, fullwidth glyph 3 ink pixels: 16
+update launch, fullwidth glyphs 3/1 differing pixels: 27
+update launch, fullwidth glyphs 3/2 differing pixels: 8
+update launch, fullwidth glyph 4 ink pixels: 17
+update launch, fullwidth glyphs 4/1 differing pixels: 24
+update launch, fullwidth glyphs 4/2 differing pixels: 19
+update launch, fullwidth glyphs 4/3 differing pixels: 17
+PASS: single-file offline installation, bundled media player launch, prefix reuse and migration, Thai/fullwidth text, and three colored emoji.
 
 Separate playback validation, Debian 13.8 Slim, GNOME Mutter XWayland
 Installer SHA-256: 576a561c1795004aa7a8493dec033b6fc2f3f8b51652f692d732056de2bf44ac

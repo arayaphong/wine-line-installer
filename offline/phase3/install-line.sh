@@ -28,6 +28,12 @@ if test ! -d "$thai_fonts"; then
   (cd "$thai_fonts" && sha256sum --quiet -c SHA256SUMS)
 fi
 
+cjk_fonts=$payload/fonts/cjk
+if test ! -f "$cjk_fonts/NotoSansCJK-Regular.ttc" || test ! -f "$cjk_fonts/OFL.txt"; then
+  echo 'The offline CJK fallback font is missing. Use the current LINE payload.' >&2
+  exit 1
+fi
+
 # Resolve the user path in Wine instead of copying the snapshot user's path.
 local_appdata_win=$(wine cmd /d /c 'echo %LOCALAPPDATA%')
 local_appdata_win=$(printf '%s' "$local_appdata_win" | tr -d '\r')
@@ -74,6 +80,13 @@ install -m 644 "$thai_fonts/NotoSansThai-Regular.ttf" "$thai_fonts/NotoSansThai-
 font_key='HKLM\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
 wine reg add "$font_key" /v 'Noto Sans Thai (TrueType)' /d NotoSansThai-Regular.ttf /f >/dev/null
 wine reg add "$font_key" /v 'Noto Sans Thai Bold (TrueType)' /d NotoSansThai-Bold.ttf /f >/dev/null
+
+install -m 644 "$cjk_fonts/NotoSansCJK-Regular.ttc" "$windows/Fonts/"
+wine reg add "$font_key" /v 'Noto Sans CJK JP (OpenType)' /d NotoSansCJK-Regular.ttc /f >/dev/null
+# Qt's native fallback list includes MS UI Gothic. Wine enumerates the replacement
+# family under that name when the original font is absent.
+wine reg add 'HKCU\Software\Wine\Fonts\Replacements' \
+  /v 'MS UI Gothic' /d 'Noto Sans CJK JP' /f >/dev/null
 
 if test -f "$payload/fonts/emoji/seguiemj.ttf"; then
   install -m 644 "$payload/fonts/emoji/seguiemj.ttf" "$windows/Fonts/"

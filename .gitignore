@@ -18,6 +18,7 @@
 *.wim
 *.iso
 *.ttf
+*.ttc
 *.otf
 *.zip
 *.7z

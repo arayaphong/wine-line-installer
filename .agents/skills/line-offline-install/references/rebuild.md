@@ -13,14 +13,14 @@
 | ไฟล์โปรแกรม LINE | `line/installed-program/` ใน archive ที่แตกแล้ว ใช้กับ `--installed-line-dir` และ `offline/phase3/payload-files.sha256` |
 | LineMediaPlayer 1.2.0.662 | ใช้ `line/media-player/LineMediaPlayer-1.2.0.662.zip` จาก archive ที่แตกแล้ว ส่งพาธด้วย `--media-player-zip` หรือคัดลอก ZIP ไปไว้ที่ `baseline/inputs/LineMediaPlayer-1.2.0.662.zip` [SHA-256 ของไฟล์ใน ZIP](../../../../offline/phase3/media-player-files.sha256) |
 | DLL และ catalog ของ Microsoft | คืน `microsoft/dlls/x86/` และ `microsoft/dlls/x64-ondisk/` จาก archive ไปที่ `ms-dlls/x86/` และ `ms-dlls/x64-ondisk/` |
-| ฟอนต์ | คืน `fonts/thai-fonts/` และ `fonts/emoji-fonts/` จาก archive ไปที่ `offline/phase4/thai-fonts/` และ `offline/phase4/emoji-fonts/` |
+| ฟอนต์ | คืน `fonts/thai-fonts/`, `fonts/emoji-fonts/` และ `fonts/cjk-fonts/` จาก archive ไปที่โฟลเดอร์ชื่อเดียวกันใต้ `offline/phase4/` ชุด CJK มี `NotoSansCJK-Regular.ttc` กับ `OFL.txt` |
 | แพ็กเกจ Debian amd64 และ i386 | คืน `debian/runtime-debs/` และ `debian/media-parser-debs/` จาก archive ไปที่โฟลเดอร์ชื่อเดียวกันใต้ `offline/phase2/` พร้อม `SHA256SUMS` ชุดแรกมี Mesa และ GStreamer ชุดหลังเป็นต้นทางของตัวอ่านสตรีม H.264 และ AAC |
 | Debian 13.8 Slim `linux/amd64` | คืนไฟล์ใน `debian/base-image/` ไปที่ `offline/phase1/` สำหรับทดสอบใน Docker |
 | แพ็กเกจทดสอบ | คืน `debian/gui-test-debs/` ไปที่ `offline/phase2/gui-test-debs/` และ `debian/emoji-test-debs/` ไปที่ `offline/phase4/emoji-test-debs/` |
 
 Debian base ใช้ manifest `sha256:ab3b3c8c5159eebfca4376430132d53c4d425f869c765ecbe47177a030da575d` หากต้องดึง image ใหม่ให้ใช้ digest นี้สำหรับ `linux/amd64` ตั้งชื่อ `line-offline-test:debian-13-slim-amd64` แล้วใช้ `docker save` เก็บไปใช้แบบออฟไลน์ ตรวจเวอร์ชัน `libc6:amd64` กับ `libc6:i386` ให้ตรงกับชุด `.deb` ที่ตรึงไว้ [แผนแพ็กเกจ Debian](../../../../offline/phase2/combined-runtime-package-plan.txt) · [ผลตรวจ image](../../../../offline/phase1/debian-base-validation.log)
 
-ฟอนต์ที่ใช้คือ Noto Sans Thai 2.002 Regular/Bold พร้อม `OFL.txt` และ `seguiemj.ttf` จาก Windows ของผู้ใช้ ตรวจ SHA-256 ในทั้งสองโฟลเดอร์ด้วย `sha256sum -c SHA256SUMS` สคริปต์จะลงทะเบียนฟอนต์และตั้ง `fontengine=native` กับ `PrimeColorGlyphRun=1` ใน Wine prefix ใหม่ [ฟอนต์ Noto Sans Thai ต้นทาง](https://github.com/notofonts/thai/releases/tag/NotoSansThai-v2.002) · [OFL.txt ฉบับที่ใช้](https://github.com/notofonts/thai/blob/f8f3f024703f9d939d02f4e2fe16f1d5a39ca963/OFL.txt) · [ขั้นลง LINE และฟอนต์](../../../../offline/phase3/install-line.sh)
+ฟอนต์ที่ใช้คือ Noto Sans Thai 2.002 Regular/Bold, Noto Sans CJK Regular 2.004 และ `seguiemj.ttf` จาก Windows ของผู้ใช้ ชุด Noto ทั้งสองชุดมีใบอนุญาต `OFL.txt` ตรวจ SHA-256 ในแต่ละโฟลเดอร์ด้วย `sha256sum -c SHA256SUMS` สคริปต์ลงทะเบียนฟอนต์และตั้งให้ Wine ใช้ Noto Sans CJK JP แทน `MS UI Gothic` เมื่อ Qt ขอใช้ฟอนต์สำรองสำหรับอักษรญี่ปุ่นและอักษรแบบเต็มความกว้าง การวาดอีโมจิสีใช้ `fontengine=native` กับ `PrimeColorGlyphRun=1` [ฟอนต์ Noto Sans Thai ต้นทาง](https://github.com/notofonts/thai/releases/tag/NotoSansThai-v2.002) · [ขั้นลง LINE และฟอนต์](../../../../offline/phase3/install-line.sh)
 
 ## 2. แพตช์และบิลด์ Wine ในรอบสร้าง `.run`
 
@@ -56,7 +56,7 @@ docker load -i offline/phase1/debian-13-slim-amd64.image.tar
 bash offline/phase5/verify.sh offline/phase6
 ```
 
-ตัวทดสอบคัดลอกเฉพาะ `.run` เข้า container ที่ตัดเครือข่าย ตรวจ checksum และไลบรารีของ `winex11.so` กับ WineGStreamer จากนั้นเพิ่มเครื่องมือจอทดสอบ ตรวจอีโมจิในช่องอีเมล และตรวจการลงตัวเล่นทั้งใน Wine prefix ใหม่และ prefix เดิม ตัวทดสอบเปิด `LineMediaPlayer.exe standalone=1` บน Xvfb ที่เปิด GLX เพื่อตรวจการเริ่ม Direct3D 11 การยืนยันบัญชีทำใน Debian ที่ต่ออินเทอร์เน็ตได้ตาม [ขั้นเข้าสู่ระบบจริง](../SKILL.md) [ผลทดสอบติดตั้งออฟไลน์](../../../../offline/phase6/clean-debian-validation.log)
+ตัวทดสอบคัดลอกเฉพาะ `.run` เข้า container ที่ตัดเครือข่าย ตรวจ checksum และไลบรารีของ `winex11.so` กับ WineGStreamer จากนั้นเพิ่มเครื่องมือจอทดสอบ วาง `ภาษาไทย ｊｕｎｅ 🔮🔥🙏` ในช่องอีเมลเพื่อตรวจการแสดงอักษรไทย อักษรแบบเต็มความกว้าง และอีโมจิสี แล้วตรวจการลงตัวเล่นทั้งใน Wine prefix ใหม่และ prefix เดิม ตัวทดสอบเปิด `LineMediaPlayer.exe standalone=1` บน Xvfb ที่เปิด GLX เพื่อตรวจการเริ่ม Direct3D 11 การยืนยันบัญชีทำใน Debian ที่ต่ออินเทอร์เน็ตได้ [ขั้นเข้าสู่ระบบจริง](../SKILL.md) · [ผลทดสอบติดตั้งออฟไลน์](../../../../offline/phase6/clean-debian-validation.log)
 
 ทดสอบเล่น MP4 โดยลากไฟล์เข้า `LineMediaPlayer.exe standalone=1` บน X11 หรือ XWayland ให้ Qt ใช้ Direct3D 11 ตามค่าเริ่มต้น หากรันใน Docker ให้เชื่อม socket PulseAudio หรือ PipeWire-Pulse ของโฮสต์และกำหนด `PULSE_SERVER` ไปที่ socket ใน container เพื่อทดสอบเสียงกับเดสก์ท็อปจริง
 
@@ -66,7 +66,7 @@ bash offline/phase5/verify.sh offline/phase6
 
 - ถ้าติดตั้งค้างที่เงื่อนไข `libc6` ให้เทียบ `dpkg-query -W libc6:amd64` กับชุด `.deb` ใช้ Debian base ที่ตรึงไว้และรักษาเวอร์ชันของแพ็กเกจ amd64 กับ i386 ให้ตรงกัน
 - ถ้าพบ `NO_SIGNATURE` ให้ตรวจชื่อ DLL ในข้อความและ checksum ของ DLL กับ catalog ในชุดที่ตรงสถาปัตยกรรม สคริปต์ติดตั้งตั้งค่า `HKCU\Software\Wine\DllOverrides` ก่อนคัดลอกไฟล์ Microsoft ที่ลงลายเซ็นไว้ ชุดนี้ใช้ `builtin` สำหรับ `crypt32`, `dwmapi`, `dxgi`, `mfplat`, `msimg32`, `userenv`, `version`, `winhttp`, `wininet`, `winmm` และ `native,builtin` สำหรับ `gdiplus`, `webio` [คำสั่งติดตั้ง DLL และ catalog](../../../../offline/phase3/install-line.sh)
-- ถ้าภาษาไทยหรืออีโมจิสีผิด ให้ตรวจว่า prefix ใช้ฟอนต์ที่เก็บไว้และไฟล์ `qt.conf` ข้าง `LINE.exe` ตั้ง `fontengine=native` พร้อม `PrimeColorGlyphRun=1` สำหรับ Wine แพตช์ 0004 [การตั้งค่าที่ใช้จริง](../../../../offline/phase3/install-line.sh)
+- ถ้าตัวอักษรแบบเต็มความกว้างกลายเป็นช่องสี่เหลี่ยม ให้ตรวจ `NotoSansCJK-Regular.ttc` ใน `drive_c/windows/Fonts` และค่า `MS UI Gothic` ใน `HKCU\Software\Wine\Fonts\Replacements` ซึ่งต้องเป็น `Noto Sans CJK JP` ถ้าภาษาไทยหรืออีโมจิสีผิด ให้ตรวจฟอนต์ใน prefix, `fontengine=native` ใน `qt.conf` ข้าง `LINE.exe` และ `PrimeColorGlyphRun=1` สำหรับ Wine แพตช์ 0004 [การตั้งค่าที่ใช้จริง](../../../../offline/phase3/install-line.sh)
 - ถ้าหน้าเข้าสู่ระบบแสดงปัญหาเครือข่าย ให้ตรวจอินเทอร์เน็ตและ DNS จาก Debian ที่รัน LINE แล้วเปิด QR ใหม่ ในรอบทดสอบออฟไลน์ผลที่ต้องเห็นคือหน้าต่าง LINE กับฟอนต์ตามเกณฑ์ รันการยืนยันบัญชีในรอบที่มีเครือข่าย [ผลทดสอบการแสดง QR](../../../../analysis/fresh-login-readiness-20261127.log)
 
 ## กู้วัตถุดิบเมื่อ archive หาย

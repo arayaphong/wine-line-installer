@@ -1,6 +1,6 @@
 # LINE for Linux offline installer
 
-Build LINE Desktop 26.6.0.4004 by patching Wine from pinned upstream inputs and packaging a `.run` for Debian 13 amd64. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session. The installation includes the LINE media player, Thai fonts, color emoji support, and a fix for LINE's window shadows on GNOME XWayland.
+Build LINE Desktop 26.6.0.4004 by patching Wine from pinned upstream inputs and packaging a `.run` for Debian 13 amd64. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session. The installation includes the LINE media player, Thai fonts, Japanese and fullwidth font fallback, color emoji support, and a fix for LINE's window shadows on GNOME XWayland.
 
 Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md) and its [rebuild guide](.agents/skills/line-offline-install/references/rebuild.md). Every step can be followed in a terminal or by an AI agent that reads Markdown and runs commands. The offline install and launch path uses standalone Wine. The optional file acquisition workflow uses Bottles to reproduce the original LINE installation.
 
@@ -79,9 +79,9 @@ The offline payload includes all 130 files from LINE's official media player ZIP
 
 ## Build in a fresh checkout
 
-To rebuild from the preserved inputs, extract `line-installer-downloads-26.6.0.4004.tar.zst` and follow its `README.md`. The archive includes the official player ZIP, the pinned Debian playback packages and the checksums for the tested installer. [Archive on Google Drive](https://drive.google.com/file/d/1tgjea5ZodPtXFg-5IP_zKs2-cmJGHB3b/view?usp=sharing)
+To rebuild from the preserved inputs, extract `line-installer-downloads-26.6.0.4004.tar.zst` and follow its `README.md`. The archive includes the official player ZIP, the pinned Debian playback packages, the Noto Sans CJK collection and its OFL license, and the checksums for the tested installer. [Archive on Google Drive](https://drive.google.com/file/d/1tgjea5ZodPtXFg-5IP_zKs2-cmJGHB3b/view?usp=sharing)
 
-1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the input archive. Use the media player ZIP in `line/media-player/` and restore both `debian/runtime-debs/` and `debian/media-parser-debs/`. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. The build runs offline once all inputs are available locally. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
+1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the input archive. Use the media player ZIP in `line/media-player/` and restore both `debian/runtime-debs/` and `debian/media-parser-debs/`. Copy `fonts/cjk-fonts/` to `offline/phase4/cjk-fonts/`. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. The build runs offline once all inputs are available locally. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
 
 2. Run these commands from the project root. The first command verifies Soda, applies the Wine patches, builds the patched DLLs and X11 driver, and packages the runtime for the current build.
 
@@ -97,7 +97,7 @@ To rebuild from the preserved inputs, extract `line-installer-downloads-26.6.0.4
 
    Use the checksums generated for the new runtime and `.run` together. The checked-in checksums record the tested reference build. Compiler output and packaging can change the checksum of a fresh build from pinned sources. Verify the newly built installer on clean Debian. [Rebuild and test procedure](.agents/skills/line-offline-install/references/rebuild.md)
 
-In a clean checkout, the refreshed archive with the reference Wine runtime reproduced the payload and `.run` hashes recorded in the archive's `project-pins/` directory.
+The archive's `project-pins/` directory records the expected payload and `.run` checksums for the reference Wine runtime.
 
 ## Install and verify
 
@@ -109,9 +109,9 @@ sudo sh ./LINE-offline-26.6.0.4004-linux-x86_64.run
 line-offline
 ```
 
-The first launch creates a Wine prefix under `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine` and puts the bundled media player in `%LOCALAPPDATA%\LINE\Data\plugin\LineMediaPlayer\1.2.0.662`. An existing prefix receives the player on its first launch with the updated `.run`. Check Thai text on the sign-in screen and paste `🔮🔥🙏` into the email field to verify all three appear in color. Clear the email field and connect to the internet to sign in. The account owner scans the QR code in LINE on their phone and confirms the sign-in. Verify that the chat list opens and the same desktop account can start LINE again.
+The first launch creates a Wine prefix under `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine` and puts the bundled media player in `%LOCALAPPDATA%\LINE\Data\plugin\LineMediaPlayer\1.2.0.662`. It also registers Noto Sans CJK JP as Wine's replacement for `MS UI Gothic`, which Qt uses as a fallback. An existing prefix receives these files and settings on its first launch with the updated `.run`. Paste `ภาษาไทย ｊｕｎｅ 🔮🔥🙏` into the sign-in email field. Check that the Thai text and the four fullwidth letters are readable and all three emoji appear in color. Clear the field before connecting to the internet to sign in. The account owner scans the QR code in LINE on their phone and confirms the sign-in. Verify that the chat list opens and the same desktop account can start LINE again.
 
-The clean Debian test covers offline installation, driver and decoder dependencies, Direct3D initialization in the bundled player, colored emoji, and provisioning an existing prefix. A separate test played a local H.264/AAC MP4 through to the end on Mutter XWayland and verified a stereo stream through the desktop's PulseAudio-compatible socket. The online test reached the QR screen. Completing sign-in requires the account owner's confirmation. [Offline and playback tests](offline/phase6/clean-debian-validation.log) · [Mutter XWayland shadow test](patches/0005-mutter-xwayland-validation.txt) · [Online readiness test](analysis/fresh-login-readiness-20261127.log)
+The clean Debian test covers offline installation, driver and decoder dependencies, Direct3D initialization in the bundled player, Thai and fullwidth text with color emoji in the email field, and provisioning an existing prefix. A separate test played a local H.264/AAC MP4 through to the end on Mutter XWayland and verified a stereo stream through the desktop's PulseAudio-compatible socket. The online test reached the QR screen. Completing sign-in requires the account owner's confirmation. [Offline and playback tests](offline/phase6/clean-debian-validation.log) · [Mutter XWayland shadow test](patches/0005-mutter-xwayland-validation.txt) · [Online readiness test](analysis/fresh-login-readiness-20261127.log)
 
 LINE maintains a separate plugin catalog. In a clean networked test the bundled player files were present at the sign-in screen, while LINE had yet to create its `plugin.bin` cache after 60 seconds. Playback from the signed-in chat interface still needs verification.
 

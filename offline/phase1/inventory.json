@@ -645,6 +645,30 @@
       "role_in_test_set": "thai-sample"
     },
     {
+      "path": "offline/phase4/cjk-fonts/NotoSansCJK-Regular.ttc",
+      "version": "2.004",
+      "size_bytes": 19484784,
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a",
+      "families": [
+        "Noto Sans CJK JP",
+        "Noto Sans CJK KR",
+        "Noto Sans CJK SC",
+        "Noto Sans CJK TC",
+        "Noto Sans CJK HK",
+        "Noto Sans Mono CJK JP",
+        "Noto Sans Mono CJK KR",
+        "Noto Sans Mono CJK SC",
+        "Noto Sans Mono CJK TC",
+        "Noto Sans Mono CJK HK"
+      ],
+      "registry_name": "Noto Sans CJK JP (OpenType)",
+      "registered_in_current_bottle": false,
+      "role_in_test_set": "fullwidth-fallback",
+      "license": "OFL-1.1",
+      "license_sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+      "known_upstream": "https://github.com/notofonts/noto-cjk/releases/tag/Sans2.004"
+    },
+    {
       "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/tahoma.ttf",
       "size_bytes": 383804,
       "sha256": "08f45bf539954d3252df97a2ae563362ed2ad5ebe05f2d1f2bc54b931e4d0550",

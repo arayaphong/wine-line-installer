@@ -195,6 +195,23 @@ def build(installed_line_dir=None, media_player_zip=None):
         emoji_target.mkdir(parents=True)
         shutil.copyfile(emoji_source, emoji_target / emoji_name)
 
+        cjk_fonts = [entry for entry in inventory["font_candidates"]
+                     if entry["role_in_test_set"] == "fullwidth-fallback"]
+        if len(cjk_fonts) != 1 or Path(cjk_fonts[0]["path"]).name != "NotoSansCJK-Regular.ttc":
+            raise ValueError("The phase 1 inventory must pin the fullwidth fallback font")
+        cjk = cjk_fonts[0]
+        cjk_source = PHASE.parent / "phase4/cjk-fonts"
+        cjk_font = cjk_source / Path(cjk["path"]).name
+        cjk_license = cjk_source / "OFL.txt"
+        if cjk_font.stat().st_size != cjk["size_bytes"] or sha256(cjk_font) != cjk["sha256"]:
+            raise ValueError("CJK font differs from the phase 1 inventory: NotoSansCJK-Regular.ttc")
+        if sha256(cjk_license) != cjk["license_sha256"]:
+            raise ValueError("CJK license differs from the phase 1 inventory: OFL.txt")
+        cjk_target = stage / "fonts/cjk"
+        cjk_target.mkdir(parents=True)
+        shutil.copyfile(cjk_font, cjk_target / cjk_font.name)
+        shutil.copyfile(cjk_license, cjk_target / cjk_license.name)
+
         files = sorted(path for path in stage.rglob("*") if path.is_file())
         index = stage / "SHA256SUMS"
         index.write_text("".join(f"{sha256(path)}  {path.relative_to(stage).as_posix()}\n" for path in files))
@@ -215,7 +232,7 @@ def build(installed_line_dir=None, media_player_zip=None):
         archive_checksum.replace(PHASE / archive_checksum.name)
         index.replace(PHASE / "payload-files.sha256")
     print(f"Packed {program_files} LINE files, {media_files} media player files, "
-          f"{len(support_files)} Microsoft DLL/catalog files, and Thai and emoji fonts")
+          f"{len(support_files)} Microsoft DLL/catalog files, and Thai, emoji and CJK fonts")
 
 
 if __name__ == "__main__":

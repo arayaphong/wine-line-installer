@@ -173,6 +173,25 @@ close_line() {
   as_user env WINEPREFIX="$prefix" "$release/wine/bin/wineserver" -w
 }
 
+check_cjk_fallback() {
+  cmp "$release/payload/fonts/cjk/NotoSansCJK-Regular.ttc" \
+    "$prefix/drive_c/windows/Fonts/NotoSansCJK-Regular.ttc"
+  as_user env WINEPREFIX="$prefix" WINEDEBUG=-all "$release/wine/bin/wine" reg query \
+    'HKLM\Software\Microsoft\Windows NT\CurrentVersion\Fonts' \
+    /v 'Noto Sans CJK JP (OpenType)' | tr -d '\r' | \
+    grep -E 'Noto Sans CJK JP \(OpenType\)[[:space:]]+REG_SZ[[:space:]]+NotoSansCJK-Regular\.ttc[[:space:]]*$'
+  as_user env WINEPREFIX="$prefix" WINEDEBUG=-all "$release/wine/bin/wine" reg query \
+    'HKCU\Software\Wine\Fonts\Replacements' /v 'MS UI Gothic' | tr -d '\r' | \
+    grep -E 'MS UI Gothic[[:space:]]+REG_SZ[[:space:]]+Noto Sans CJK JP[[:space:]]*$'
+}
+
+paste_email_text() {
+  printf '%s' "$1" | xclip -in -selection clipboard
+  xdotool windowfocus --sync "$window" mousemove --window "$window" 144 149 click 1 \
+    key --clearmodifiers ctrl+a ctrl+v Tab mousemove --window "$window" 14 15
+  sleep 1
+}
+
 check_email_field() {
   capture=$1
   emoji='🔮🔥🙏'
@@ -194,6 +213,24 @@ check_email_field() {
   sleep 1
   test "$(xclip -out -selection clipboard)" = "$emoji"
   printf '%s launch: confirmed the email field contains %s\n' "$capture" "$emoji"
+
+  text='ภาษาไทย ｊｕｎｅ 🔮🔥🙏'
+  paste_email_text "$text"
+  cp /tmp/frames/Xvfb_screen0 "/results/$capture-text.xwd"
+  printf '%s' 'clipboard sentinel' | xclip -in -selection clipboard
+  xdotool mousemove --window "$window" 144 149 click 1 key --clearmodifiers ctrl+a ctrl+c
+  sleep 1
+  test "$(xclip -out -selection clipboard)" = "$text"
+  printf '%s launch: confirmed the email field contains %s\n' "$capture" "$text"
+
+  # Single-character captures let the host reject both blanks and identical tofu.
+  # Tab moves the caret outside the email crop before each capture.
+  glyph_index=0
+  for glyph in ｊ ｕ ｎ ｅ; do
+    glyph_index=$((glyph_index + 1))
+    paste_email_text "$glyph"
+    cp /tmp/frames/Xvfb_screen0 "/results/$capture-fullwidth-$glyph_index.xwd"
+  done
 }
 
 open_line
@@ -211,6 +248,7 @@ for style in Regular Bold; do
   font=NotoSansThai-$style.ttf
   cmp "$release/payload/fonts/thai/$font" "$prefix/drive_c/windows/Fonts/$font"
 done
+check_cjk_fallback
 grep -iE 'Loaded L".*dwrite\.dll|Loaded L".*qwindows\.dll' /tmp/line.log | tail -3
 check_email_field first
 
@@ -219,6 +257,7 @@ open_line
 test "$(stat -c %i "$state")" = "$state_inode"
 test "$(cat "$line_data/.verification-profile")" = persistent
 echo 'Reopened LINE using its existing Wine prefix and profile files.'
+check_cjk_fallback
 check_email_field restart
 
 # Exercise changed-bundle provisioning on a prefix from a player-free build.
@@ -226,13 +265,19 @@ close_line
 as_user mv "$media_dir" "$prefix/.verification-old-media"
 as_user mkdir "$media_parent/other-version"
 as_user touch "$media_parent/other-version/.verification-keep"
+as_user mv "$prefix/drive_c/windows/Fonts/NotoSansCJK-Regular.ttc" "$prefix/.verification-old-cjk-font"
+as_user env WINEPREFIX="$prefix" WINEDEBUG=-all "$release/wine/bin/wine" reg delete \
+  'HKCU\Software\Wine\Fonts\Replacements' /v 'MS UI Gothic' /f >/dev/null
+as_user env WINEPREFIX="$prefix" "$release/wine/bin/wineserver" -w
 as_user /bin/sh -c 'printf "previous-build\n%s\n" "$2" > "$1"' _ "$state" "$(sed -n '2p' "$state")"
 open_line
 test "$(sed -n '1p' "$state")" = "$(cat "$release/bundle.sha256")"
 (cd "$media_dir" && sha256sum --quiet -c /tmp/line-media-player.sha256)
 test "$(cat "$line_data/.verification-profile")" = persistent
 test -f "$media_parent/other-version/.verification-keep"
+check_cjk_fallback
 echo 'Updated an existing Wine prefix with the media player and preserved its profile and other plugin directory.'
+check_email_field update
 close_line
 
 # The login checks use basic X11. The player requires Direct3D via GLX.
@@ -267,7 +312,7 @@ echo 'The bundled LineMediaPlayer.exe opened and initialized Direct3D 11 with ne
 CONTAINER
 
 docker cp "$container:/results/." "$scratch"
-for capture in first restart; do
+for capture in first restart update; do
   read -r window_x window_y window_w window_h < "$scratch/$capture-geometry.txt"
   geometry=$(printf '%sx%s%+d%+d' "$window_w" "$window_h" "$window_x" "$window_y")
   magick "xwd:$scratch/$capture.xwd" -crop "$geometry" +repage -strip "$scratch/$capture.png"
@@ -279,7 +324,28 @@ for capture in first restart; do
     test "$pixels" -ge 12
     printf '%s launch, colored pixels at email field offset %s: %s\n' "$capture" "$offset" "$pixels"
   done
+  magick "xwd:$scratch/$capture-text.xwd" -crop "$geometry" +repage -strip "$scratch/$capture-text.png"
+  for glyph_index in 1 2 3 4; do
+    magick "xwd:$scratch/$capture-fullwidth-$glyph_index.xwd" -crop "$geometry" +repage \
+      -crop '24x24+65+137' +repage -colorspace gray -threshold 60% -negate \
+      "$scratch/$capture-fullwidth-$glyph_index.png"
+    pixels=$(magick "$scratch/$capture-fullwidth-$glyph_index.png" \
+      -format '%[fx:round(mean*w*h)]' info:)
+    test "$pixels" -ge 4
+    printf '%s launch, fullwidth glyph %s ink pixels: %s\n' "$capture" "$glyph_index" "$pixels"
+    other=1
+    while [ "$other" -lt "$glyph_index" ]; do
+      difference=$(magick "$scratch/$capture-fullwidth-$glyph_index.png" \
+        "$scratch/$capture-fullwidth-$other.png" -compose difference -composite \
+        -format '%[fx:round(mean*w*h)]' info:)
+      printf '%s launch, fullwidth glyphs %s/%s differing pixels: %s\n' \
+        "$capture" "$glyph_index" "$other" "$difference"
+      test "$difference" -ge 3
+      other=$((other + 1))
+    done
+  done
 done
 mkdir -p -- "$results"
 install -m 644 "$scratch/restart.png" "$results/line-login-emoji.png"
-echo 'PASS: single-file offline installation, bundled media player launch, prefix reuse and migration, and three colored emoji.'
+install -m 644 "$scratch/restart-text.png" "$results/line-login-text.png"
+echo 'PASS: single-file offline installation, bundled media player launch, prefix reuse and migration, Thai/fullwidth text, and three colored emoji.'
