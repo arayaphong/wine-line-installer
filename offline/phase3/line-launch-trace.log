@@ -1,0 +1,2 @@
+0130:trace:loaddll:build_module Loaded L"C:\\users\\root\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\LINE.exe" at 0000000140000000: native
+0130:trace:loaddll:build_module Loaded L"C:\\users\\root\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native

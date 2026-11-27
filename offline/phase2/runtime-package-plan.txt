@@ -1,0 +1,38 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  fontconfig-config fonts-dejavu-core fonts-dejavu-mono libbrotli1 libexpat1
+  libffi8 libidn2-0 libp11-kit0 libpng16-16t64 libtasn1-6 libunistring5
+  libx11-data libxau6 libxcb1 libxdmcp6
+Suggested packages:
+  gnutls-bin
+The following NEW packages will be installed:
+  fontconfig-config fonts-dejavu-core fonts-dejavu-mono libbrotli1 libexpat1
+  libffi8 libfontconfig1 libfreetype6 libgnutls30t64 libidn2-0 libp11-kit0
+  libpng16-16t64 libtasn1-6 libunistring5 libunwind8 libx11-6 libx11-data
+  libxau6 libxcb1 libxdmcp6 libxext6
+0 upgraded, 21 newly installed, 0 to remove and 3 not upgraded.
+Need to get 7216 kB of archives.
+After this operation, 19.9 MB of additional disk space will be used.
+'https://deb.debian.org/debian/pool/main/e/expat/libexpat1_2.9.0-1%7edeb13u1_amd64.deb' libexpat1_2.9.0-1~deb13u1_amd64.deb 125744 MD5Sum:bd8a27aab82e93501bb2028635c540cb
+'https://deb.debian.org/debian/pool/main/f/fonts-dejavu/fonts-dejavu-mono_2.37-8_all.deb' fonts-dejavu-mono_2.37-8_all.deb 488808 MD5Sum:946eab8f7cb1e6313bb25975156f1714
+'https://deb.debian.org/debian/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-8_all.deb' fonts-dejavu-core_2.37-8_all.deb 840460 MD5Sum:a1ef9f90a50918bc2430b08ec79dad1e
+'https://deb.debian.org/debian/pool/main/f/fontconfig/fontconfig-config_2.15.0-2.3_amd64.deb' fontconfig-config_2.15.0-2.3_amd64.deb 318308 MD5Sum:95f8ab94549d523b1a2739afefe99757
+'https://deb.debian.org/debian/pool/main/b/brotli/libbrotli1_1.1.0-2%2bdeb13u1_amd64.deb' libbrotli1_1.1.0-2+deb13u1_amd64.deb 303640 MD5Sum:9737b755e49c8074b58c97ac137205e4
+'https://deb.debian.org/debian/pool/main/libf/libffi/libffi8_3.4.8-2_amd64.deb' libffi8_3.4.8-2_amd64.deb 24144 MD5Sum:acf30e8b2efe35ce199554f6493f3791
+'https://deb.debian.org/debian/pool/main/libp/libpng1.6/libpng16-16t64_1.6.48-1%2bdeb13u6_amd64.deb' libpng16-16t64_1.6.48-1+deb13u6_amd64.deb 283368 MD5Sum:1c23fe6862365c4720efe4dcb4f0fecb
+'https://deb.debian.org/debian/pool/main/f/freetype/libfreetype6_2.13.3%2bdfsg-1%2bdeb13u2_amd64.deb' libfreetype6_2.13.3+dfsg-1+deb13u2_amd64.deb 452256 MD5Sum:18a7d096d2308d71db47e103ac7f6359
+'https://deb.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.15.0-2.3_amd64.deb' libfontconfig1_2.15.0-2.3_amd64.deb 391576 MD5Sum:51964bf406139551c59047e6cbdd4940
+'https://deb.debian.org/debian/pool/main/libu/libunistring/libunistring5_1.3-2_amd64.deb' libunistring5_1.3-2_amd64.deb 476768 MD5Sum:954d362e7a674be8969e0c223782de72
+'https://deb.debian.org/debian/pool/main/libi/libidn2/libidn2-0_2.3.8-2_amd64.deb' libidn2-0_2.3.8-2_amd64.deb 109096 MD5Sum:c12f652b328832486b6992d355e52c29
+'https://deb.debian.org/debian/pool/main/p/p11-kit/libp11-kit0_0.25.5-3_amd64.deb' libp11-kit0_0.25.5-3_amd64.deb 425240 MD5Sum:d27fc7a8b7a7baac77b087b96d69d143
+'https://deb.debian.org/debian/pool/main/libt/libtasn1-6/libtasn1-6_4.20.0-2%2bdeb13u1_amd64.deb' libtasn1-6_4.20.0-2+deb13u1_amd64.deb 50112 MD5Sum:0dee8d137e0d8bbc8a57e721c13a5f66
+'https://deb.debian.org/debian/pool/main/g/gnutls28/libgnutls30t64_3.8.9-3%2bdeb13u4_amd64.deb' libgnutls30t64_3.8.9-3+deb13u4_amd64.deb 1469024 MD5Sum:ce391a9ff4974eba985481ee3eaf34a5
+'https://deb.debian.org/debian/pool/main/libu/libunwind/libunwind8_1.8.1-0.1_amd64.deb' libunwind8_1.8.1-0.1_amd64.deb 56252 MD5Sum:4d8d51711639eacfd68d0ef51f0b5688
+'https://deb.debian.org/debian/pool/main/libx/libxau/libxau6_1.0.11-1_amd64.deb' libxau6_1%3a1.0.11-1_amd64.deb 20392 MD5Sum:4aec39848ed84d35bdd168928d7a37a5
+'https://deb.debian.org/debian/pool/main/libx/libxdmcp/libxdmcp6_1.1.5-1_amd64.deb' libxdmcp6_1%3a1.1.5-1_amd64.deb 27756 MD5Sum:94f9ea6d11adfdd4fa1469e8648f08ff
+'https://deb.debian.org/debian/pool/main/libx/libxcb/libxcb1_1.17.0-2%2bb1_amd64.deb' libxcb1_1.17.0-2+b1_amd64.deb 144340 MD5Sum:ab87e347ccb5ae730863b6989ea47b34
+'https://deb.debian.org/debian/pool/main/libx/libx11/libx11-data_1.8.12-1_all.deb' libx11-data_2%3a1.8.12-1_all.deb 343072 MD5Sum:1c54a8670f2640f5cf999c5da9d5f88c
+'https://deb.debian.org/debian/pool/main/libx/libx11/libx11-6_1.8.12-1_amd64.deb' libx11-6_2%3a1.8.12-1_amd64.deb 815292 MD5Sum:723fec07f977145e0ed2c6ff8048a69d
+'https://deb.debian.org/debian/pool/main/libx/libxext/libxext6_1.3.4-1%2bb3_amd64.deb' libxext6_2%3a1.3.4-1+b3_amd64.deb 50448 MD5Sum:5c21b254e638c96f172728b5fb816ef8

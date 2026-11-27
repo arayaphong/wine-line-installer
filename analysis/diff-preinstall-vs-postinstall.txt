@@ -1,0 +1,293 @@
+## Files outside drive_c/windows
+CHANGED  ./bottle.yml
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/Data/installLang.ini
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.msix
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineAppMgr.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineConnector.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineDiag.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineLauncher.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineUnInst.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineUnInst_RC.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineUpdater.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Core.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Core5Compat.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Gui.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6LabsQmlModels.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Multimedia.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6MultimediaQuick.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Network.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6OpenGL.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6OpenGLWidgets.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6PrintSupport.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Qml.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QmlModels.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QmlWorkerScript.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Quick.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2Basic.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2BasicStyleImpl.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2Fusion.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2FusionStyleImpl.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickControls2Impl.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickDialogs2.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickDialogs2QuickImpl.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickDialogs2Utils.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickLayouts.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickShapes.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickTemplates2.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6QuickWidgets.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6ShaderTools.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Svg.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6TextToSpeech.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/Qt6Widgets.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/WebView2Loader.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-file-l1-2-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-file-l2-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-localization-l1-2-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-processthreads-l1-1-1.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-synch-l1-2-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-core-timezone-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-conio-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-convert-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-environment-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-filesystem-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-heap-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-locale-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-math-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-runtime-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-stdio-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-string-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-time-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/api-ms-win-crt-utility-l1-1-0.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/SplashScreen.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square150x150Logo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square150x150Logo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square150x150Logo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square150x150Logo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square150x150Logo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square310x310Logo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square310x310Logo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square310x310Logo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square310x310Logo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square310x310Logo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-lightunplated_targetsize-16.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-lightunplated_targetsize-24.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-lightunplated_targetsize-256.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-lightunplated_targetsize-32.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-lightunplated_targetsize-48.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-unplated_targetsize-16.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-unplated_targetsize-24.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-unplated_targetsize-256.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-unplated_targetsize-32.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.altform-unplated_targetsize-48.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.targetsize-16.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.targetsize-24.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.targetsize-256.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.targetsize-32.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square44x44Logo.targetsize-48.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square71x71Logo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square71x71Logo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square71x71Logo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square71x71Logo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Square71x71Logo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/StoreLogo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/StoreLogo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/StoreLogo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/StoreLogo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/StoreLogo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Wide310x150Logo.scale-100.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Wide310x150Logo.scale-125.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Wide310x150Logo.scale-150.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Wide310x150Logo.scale-200.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/assets/Wide310x150Logo.scale-400.png
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/dbghelp.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/imageformats/qgif.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/imageformats/qico.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/imageformats/qjpeg.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/imageformats/qsvg.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/imageformats/qwebp.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/libcrypto-1_1-x64.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/libssl-1_1-x64.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/msvcp140.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/msvcp140_1.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/msvcp140_2.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/multimedia/windowsmediaplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/opensource_notice.txt
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/platforms/qwindows.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/effectsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/labsmodelsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/modelsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/particlesplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmlfolderlistmodelplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmllocalstorageplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmlmetaplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmlplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmlshapesplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qmlxmllistmodelplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qquicklayoutsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtgraphicaleffectsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtgraphicaleffectsprivateplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtlabsplatformplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtqmlstatemachineplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquick2plugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2basicstyleimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2basicstyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2fusionstyleimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2fusionstyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2imaginestyleimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2imaginestyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2implplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2materialstyleimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2materialstyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2nativestyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2plugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2universalstyleimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2universalstyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickcontrols2windowsstyleplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickdialogs2quickimplplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquickdialogsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquicktemplates2plugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtquicktimelineplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbbuiltinstylesplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbcomponentsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbhangulplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkblayoutsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbopenwnnplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbpinyinplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbpluginsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbsettingsplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbstylesplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbtcimeplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/qtvkbthaiplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/quickmultimediaplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/quicktoolingplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/quickwindowplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/plugins/workerscriptplugin.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/resource/default.dat
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/resources.pri
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/skottie.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/texttospeech/qtexttospeech_sapi.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/ucrtbase.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/vcruntime140.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/vcruntime140_1.dll
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/LineLauncher.exe
+ADDED    ./drive_c/users/arme/AppData/Local/LINE/bin/LineUnInst.exe
+ADDED    ./drive_c/users/arme/AppData/Local/Microsoft/Windows/INetCache/Content.IE5/DXYLA7E3/codesigningrootr45[0]
+ADDED    ./drive_c/users/arme/AppData/Local/Microsoft/Windows/INetCache/Content.IE5/LDQBGA69/codesigningrootr45[0]
+ADDED    ./drive_c/users/arme/AppData/Local/Microsoft/Windows/INetCache/Content.IE5/index.dat
+ADDED    ./drive_c/users/arme/AppData/Roaming/Microsoft/Windows/Start Menu/LINE.lnk
+ADDED    ./drive_c/users/arme/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/LINE/LINE Uninstall.lnk
+ADDED    ./drive_c/users/arme/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/LINE/LINE.lnk
+ADDED    ./drive_c/users/arme/Desktop/LINE.lnk
+
+## drive_c/windows changes (counts)
+ADDED        4  ./drive_c/windows/system32/catroot
+CHANGED      1  ./drive_c/windows/system32/wintrust.dll
+CHANGED      1  ./drive_c/windows/syswow64/dwmapi.dll
+CHANGED      1  ./drive_c/windows/syswow64/msftedit.dll
+CHANGED      1  ./drive_c/windows/syswow64/msimg32.dll
+CHANGED      1  ./drive_c/windows/syswow64/ntdll.dll
+CHANGED      1  ./drive_c/windows/syswow64/webio.dll
+CHANGED      1  ./drive_c/windows/syswow64/winhttp.dll
+CHANGED      1  ./drive_c/windows/syswow64/wintrust.dll
+
+## user.reg: keys added
+[Software\\Classes\\line\\DefaultIcon]
+    @="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\",0"
+[Software\\Classes\\line\\shell\\open\\command]
+    @="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\"  \"%1\""
+[Software\\Classes\\line\\shell\\open]
+    @=""
+[Software\\Classes\\line\\shell]
+    @=""
+[Software\\Classes\\line]
+    @="URL:LINE Protocol"
+    "URL Protocol"=""
+[Software\\Classes\\lineb\\DefaultIcon]
+    @="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\",0"
+[Software\\Classes\\lineb\\shell\\open\\command]
+    @="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\"  \"%1\""
+[Software\\Classes\\lineb\\shell\\open]
+    @=""
+[Software\\Classes\\lineb\\shell]
+    @=""
+[Software\\Classes\\lineb]
+    @="URL:LINE Protocol"
+    "URL Protocol"=""
+[Software\\LINE Corporation\\LINE]
+    "CheckDeploy"="1"
+    "Inatall Language"="1054"
+    "InstallDir"="C:\\users\\arme\\AppData\\Local\\LINE\\bin\\26.6.0.4004"
+    "InstallDirCandidate"="C:\\users\\arme\\AppData\\Local\\LINE\\bin\\26.6.0.4004"
+    "InstallSystemVersion"="1"
+    "LauncherPath"="C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe"
+    "locale"="th"
+    "localeMig"="Y"
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\CRLs]
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\CTLs]
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\Certificates]
+[Software\\Microsoft\\SystemCertificates\\Root\\CRLs]
+[Software\\Microsoft\\SystemCertificates\\Root\\CTLs]
+[Software\\Microsoft\\SystemCertificates\\Root\\Certificates]
+[Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\LINE]
+    "DisplayIcon"="C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe"
+    "DisplayName"="LINE"
+    "DisplayVersion"="26.6.0.4004"
+    "Publisher"="LY Corporation"
+    "UninstallString"="C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineUnInst.exe"
+    "URLInfoAbout"="http://line.me"
+[Software\\NHN Corporation\\LINE]
+    "RunOnce"="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\""
+[Software\\Naver\\LINE]
+    "InstallType"="N"
+    "RunOnce"="\"C:\\users\\arme\\AppData\\Local\\LINE\\bin\\LineLauncher.exe\""
+
+## user.reg: keys with changed values
+[Software\\Wine\\DllOverrides]
+  + "dwmapi"="native,builtin"
+  + "msimg32"="native,builtin"
+
+## system.reg: keys added
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\CRLs]
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\CTLs]
+[Software\\Microsoft\\SystemCertificates\\Disallowed\\Certificates]
+[Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\WinHttp]
+    "DefaultSecureProtocols"=dword:00000a80
+[Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\WinHttp]
+    "DefaultSecureProtocols"=dword:00000a80
+[Software\\Wow6432Node\\Wine\\HostImportedCertificates]
+    "010C0695A6981914FFBF5FC6B0B695EA29E912A6"=dword:00000001
+    "022D0582FA88CE140C0679DE7F1410E945D7A56D"=dword:00000001
+    "06083F593F15A104A069A46BA903D006B7970991"=dword:00000001
+    "07E032E020B72C3F192F0628A2593A19A70F069E"=dword:00000001
+    "093C61F38B8BDC7D55DF7538020500E125F5C836"=dword:00000001
+    "0BBEC2272249CB39AADB355C53E38CAE78FFB6FE"=dword:00000001
+    "0D44DD8C3C8C1A1A58756481E90F2E2AFFB3D26E"=dword:00000001
+    "0F36385B811A25C39B314E83CAE9346670CC74B4"=dword:00000001
+
+## system.reg: keys with changed values
+[Software\\Microsoft\\Windows\\CurrentVersion\\Fonts]
+  - "Marlett (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\marlett.ttf"
+  - "Symbol (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\symbol.ttf"
+  - "Tahoma (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\tahoma.ttf"
+  - "Tahoma Bold (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\tahomabd.ttf"
+  - "Webdings (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\webdings.ttf"
+  - "Wingdings (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10\\share\\wine\\fonts\\wingding.ttf"
+  + "Marlett (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\marlett.ttf"
+  + "Symbol (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\symbol.ttf"
+  + "Tahoma (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\tahoma.ttf"
+  + "Tahoma Bold (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\tahomabd.ttf"
+  + "Webdings (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\webdings.ttf"
+  + "Wingdings (TrueType)"="Z:\\home\\arme\\.var\\app\\com.usebottles.bottles\\data\\bottles\\runners\\soda-11.0-10-line\\share\\wine\\fonts\\wingding.ttf"

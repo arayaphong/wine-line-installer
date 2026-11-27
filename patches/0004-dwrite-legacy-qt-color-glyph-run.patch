@@ -1,0 +1,57 @@
+diff --git a/dlls/dwrite/font.c b/dlls/dwrite/font.c
+index 3baa8d2..ab586e6 100644
+--- a/dlls/dwrite/font.c
++++ b/dlls/dwrite/font.c
+@@ -428,6 +428,7 @@ struct dwrite_colorglyphenum
+     BOOL has_regular_glyphs;          /* TRUE if there's any glyph without a color */
+     UINT16 current_layer;             /* enumerator position, updated with MoveNext */
+     UINT16 max_layer_num;             /* max number of layers for this run */
++    BOOL started;
+     struct dwrite_fonttable colr;     /* used to access layers */
+ };
+ 
+@@ -6397,6 +6398,7 @@ static HRESULT WINAPI colorglyphenum_MoveNext(IDWriteColorGlyphRunEnumerator1 *i
+ 
+     TRACE("%p, %p.\n", iface, has_run);
+ 
++    glyphenum->started = TRUE;
+     *has_run = FALSE;
+ 
+     glyphenum->colorrun.glyphRun.glyphCount = 0;
+@@ -6426,13 +6428,36 @@ static HRESULT colorglyphenum_get_current_run(const struct dwrite_colorglyphenum
+     return S_OK;
+ }
+ 
++static BOOL dwrite_prime_color_glyph_run(void)
++{
++    static const WCHAR prefix[] = L"Software\\Wine\\AppDefaults\\";
++    static const WCHAR suffix[] = L"\\DirectWrite";
++    WCHAR path[MAX_PATH], key[ARRAY_SIZE(prefix) + MAX_PATH + ARRAY_SIZE(suffix)];
++    DWORD length, enabled, size = sizeof(enabled);
++    const WCHAR *name;
++
++    if (!(length = GetModuleFileNameW(NULL, path, ARRAY_SIZE(path))) || length == ARRAY_SIZE(path))
++        return FALSE;
++    name = wcsrchr(path, '\\');
++    lstrcpyW(key, prefix);
++    lstrcatW(key, name ? name + 1 : path);
++    lstrcatW(key, suffix);
++    return !RegGetValueW(HKEY_CURRENT_USER, key, L"PrimeColorGlyphRun", RRF_RT_REG_DWORD, NULL, &enabled, &size)
++            && enabled;
++}
++
+ static HRESULT WINAPI colorglyphenum_GetCurrentRun(IDWriteColorGlyphRunEnumerator1 *iface,
+         DWRITE_COLOR_GLYPH_RUN const **run)
+ {
+     struct dwrite_colorglyphenum *glyphenum = impl_from_IDWriteColorGlyphRunEnumerator1(iface);
++    BOOL has_run;
+ 
+     TRACE("%p, %p.\n", iface, run);
+ 
++    /* Old Qt calls GetCurrentRun() before its first MoveNext(). Limit the workaround to opted-in applications. */
++    if (!glyphenum->started && dwrite_prime_color_glyph_run())
++        colorglyphenum_MoveNext(iface, &has_run);
++
+     return colorglyphenum_get_current_run(glyphenum, (DWRITE_COLOR_GLYPH_RUN1 const **)run);
+ }
+ 

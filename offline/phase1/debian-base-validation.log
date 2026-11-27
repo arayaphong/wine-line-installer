@@ -1,0 +1,10 @@
+Isolated network namespace: loopback only
+Archive manifest and blobs verified: sha256:ab3b3c8c5159eebfca4376430132d53c4d425f869c765ecbe47177a030da575d
+Booted: Debian GNU/Linux 13 (trixie) (x86_64), Debian point release 13.8
+libc6:amd64	2.41-12+deb13u5
+/usr/bin/sh
+/usr/bin/tar
+/usr/bin/gzip
+/usr/bin/sha256sum
+No Wine, Flatpak, Bottles or preinstalled Wine prefix.
+Offline import into disposable containerd store: docker.io/library/line-offline-test:debian-13-slim-amd64

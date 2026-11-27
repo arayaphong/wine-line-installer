@@ -1,0 +1,73 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  fontconfig-config fonts-dejavu-core fonts-dejavu-mono gcc-14-base:i386
+  libbrotli1 libbrotli1:i386 libbz2-1.0:i386 libexpat1 libexpat1:i386 libffi8
+  libffi8:i386 libgcc-s1:i386 libgmp10:i386 libhogweed6t64:i386 libidn2-0
+  libidn2-0:i386 libnettle8t64:i386 libp11-kit0 libp11-kit0:i386
+  libpng16-16t64 libpng16-16t64:i386 libtasn1-6 libtasn1-6:i386 libunistring5
+  libunistring5:i386 libx11-data libxau6 libxau6:i386 libxcb1 libxcb1:i386
+  libxdmcp6 libxdmcp6:i386 zlib1g:i386
+Suggested packages:
+  glibc-doc:i386 libc-l10n:i386 locales:i386 libnss-nis:i386
+  libnss-nisplus:i386 gnutls-bin gnutls-bin:i386
+The following NEW packages will be installed:
+  fontconfig-config fonts-dejavu-core fonts-dejavu-mono gcc-14-base:i386
+  libbrotli1 libbrotli1:i386 libbz2-1.0:i386 libc6:i386 libexpat1
+  libexpat1:i386 libffi8 libffi8:i386 libfontconfig1 libfontconfig1:i386
+  libfreetype6 libfreetype6:i386 libgcc-s1:i386 libgmp10:i386 libgnutls30t64
+  libgnutls30t64:i386 libhogweed6t64:i386 libidn2-0 libidn2-0:i386
+  libnettle8t64:i386 libp11-kit0 libp11-kit0:i386 libpng16-16t64
+  libpng16-16t64:i386 libtasn1-6 libtasn1-6:i386 libunistring5
+  libunistring5:i386 libunwind8 libx11-6 libx11-6:i386 libx11-data libxau6
+  libxau6:i386 libxcb1 libxcb1:i386 libxdmcp6 libxdmcp6:i386 libxext6
+  libxext6:i386 zlib1g:i386
+0 upgraded, 45 newly installed, 0 to remove and 3 not upgraded.
+Need to get 16.6 MB of archives.
+After this operation, 49.6 MB of additional disk space will be used.
+'https://deb.debian.org/debian/pool/main/g/gcc-14/gcc-14-base_14.2.0-19_i386.deb' gcc-14-base_14.2.0-19_i386.deb 49376 MD5Sum:491476b068668284c948af4a335e3af2
+'https://deb.debian.org/debian/pool/main/g/gcc-14/libgcc-s1_14.2.0-19_i386.deb' libgcc-s1_14.2.0-19_i386.deb 88164 MD5Sum:4096d4517c495aa06c86c2c7a1472fd6
+'https://deb.debian.org/debian/pool/main/g/glibc/libc6_2.41-12%2bdeb13u5_i386.deb' libc6_2.41-12+deb13u5_i386.deb 2720280 MD5Sum:5c2e65db15a174edeffef10e0e858f50
+'https://deb.debian.org/debian/pool/main/e/expat/libexpat1_2.9.0-1%7edeb13u1_i386.deb' libexpat1_2.9.0-1~deb13u1_i386.deb 134248 MD5Sum:cffceebfd66325b7175ec0fd471217f3
+'https://deb.debian.org/debian/pool/main/e/expat/libexpat1_2.9.0-1%7edeb13u1_amd64.deb' libexpat1_2.9.0-1~deb13u1_amd64.deb 125744 MD5Sum:bd8a27aab82e93501bb2028635c540cb
+'https://deb.debian.org/debian/pool/main/f/fonts-dejavu/fonts-dejavu-mono_2.37-8_all.deb' fonts-dejavu-mono_2.37-8_all.deb 488808 MD5Sum:946eab8f7cb1e6313bb25975156f1714
+'https://deb.debian.org/debian/pool/main/f/fonts-dejavu/fonts-dejavu-core_2.37-8_all.deb' fonts-dejavu-core_2.37-8_all.deb 840460 MD5Sum:a1ef9f90a50918bc2430b08ec79dad1e
+'https://deb.debian.org/debian/pool/main/f/fontconfig/fontconfig-config_2.15.0-2.3_amd64.deb' fontconfig-config_2.15.0-2.3_amd64.deb 318308 MD5Sum:95f8ab94549d523b1a2739afefe99757
+'https://deb.debian.org/debian/pool/main/b/brotli/libbrotli1_1.1.0-2%2bdeb13u1_i386.deb' libbrotli1_1.1.0-2+deb13u1_i386.deb 295664 MD5Sum:01b6936c67e5e1db4b5701967cfe4f66
+'https://deb.debian.org/debian/pool/main/b/brotli/libbrotli1_1.1.0-2%2bdeb13u1_amd64.deb' libbrotli1_1.1.0-2+deb13u1_amd64.deb 303640 MD5Sum:9737b755e49c8074b58c97ac137205e4
+'https://deb.debian.org/debian/pool/main/b/bzip2/libbz2-1.0_1.0.8-6_i386.deb' libbz2-1.0_1.0.8-6_i386.deb 38060 MD5Sum:ef85915b1898b4dff81862e67c850a84
+'https://deb.debian.org/debian/pool/main/libf/libffi/libffi8_3.4.8-2_i386.deb' libffi8_3.4.8-2_i386.deb 21556 MD5Sum:775f2895074133b83117db7775c977de
+'https://deb.debian.org/debian/pool/main/libf/libffi/libffi8_3.4.8-2_amd64.deb' libffi8_3.4.8-2_amd64.deb 24144 MD5Sum:acf30e8b2efe35ce199554f6493f3791
+'https://deb.debian.org/debian/pool/main/z/zlib/zlib1g_1.3.dfsg%2breally1.3.1-1%2bdeb13u1_i386.deb' zlib1g_1%3a1.3.dfsg+really1.3.1-1+deb13u1_i386.deb 84544 MD5Sum:aad00afdb33f21184e57918c9c3a7f84
+'https://deb.debian.org/debian/pool/main/libp/libpng1.6/libpng16-16t64_1.6.48-1%2bdeb13u6_i386.deb' libpng16-16t64_1.6.48-1+deb13u6_i386.deb 290192 MD5Sum:b3f6c54fc7b076ed247c9da467f18b8e
+'https://deb.debian.org/debian/pool/main/f/freetype/libfreetype6_2.13.3%2bdfsg-1%2bdeb13u2_i386.deb' libfreetype6_2.13.3+dfsg-1+deb13u2_i386.deb 464420 MD5Sum:3aba5b98e05a12a4aec834f73a9a2b05
+'https://deb.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.15.0-2.3_i386.deb' libfontconfig1_2.15.0-2.3_i386.deb 402724 MD5Sum:a9d46db87e1b79e72b7a0010033dca31
+'https://deb.debian.org/debian/pool/main/libp/libpng1.6/libpng16-16t64_1.6.48-1%2bdeb13u6_amd64.deb' libpng16-16t64_1.6.48-1+deb13u6_amd64.deb 283368 MD5Sum:1c23fe6862365c4720efe4dcb4f0fecb
+'https://deb.debian.org/debian/pool/main/f/freetype/libfreetype6_2.13.3%2bdfsg-1%2bdeb13u2_amd64.deb' libfreetype6_2.13.3+dfsg-1+deb13u2_amd64.deb 452256 MD5Sum:18a7d096d2308d71db47e103ac7f6359
+'https://deb.debian.org/debian/pool/main/f/fontconfig/libfontconfig1_2.15.0-2.3_amd64.deb' libfontconfig1_2.15.0-2.3_amd64.deb 391576 MD5Sum:51964bf406139551c59047e6cbdd4940
+'https://deb.debian.org/debian/pool/main/g/gmp/libgmp10_6.3.0%2bdfsg-3_i386.deb' libgmp10_2%3a6.3.0+dfsg-3_i386.deb 572024 MD5Sum:682cb25a188f296aca1f271555161186
+'https://deb.debian.org/debian/pool/main/n/nettle/libnettle8t64_3.10.1-1_i386.deb' libnettle8t64_3.10.1-1_i386.deb 317552 MD5Sum:f68ce8d7191b10a9025d1477cc8df58b
+'https://deb.debian.org/debian/pool/main/n/nettle/libhogweed6t64_3.10.1-1_i386.deb' libhogweed6t64_3.10.1-1_i386.deb 337972 MD5Sum:04e01bf823a6241f82f0e4178b2e044b
+'https://deb.debian.org/debian/pool/main/libu/libunistring/libunistring5_1.3-2_i386.deb' libunistring5_1.3-2_i386.deb 471392 MD5Sum:8ebbdaaff7641da78c55f14122702f2c
+'https://deb.debian.org/debian/pool/main/libi/libidn2/libidn2-0_2.3.8-2_i386.deb' libidn2-0_2.3.8-2_i386.deb 110220 MD5Sum:04140628c21d427d9bd9067dde9ad65b
+'https://deb.debian.org/debian/pool/main/p/p11-kit/libp11-kit0_0.25.5-3_i386.deb' libp11-kit0_0.25.5-3_i386.deb 423088 MD5Sum:abe2da96593e4d5c18f0ffe1c33f5da4
+'https://deb.debian.org/debian/pool/main/libt/libtasn1-6/libtasn1-6_4.20.0-2%2bdeb13u1_i386.deb' libtasn1-6_4.20.0-2+deb13u1_i386.deb 51704 MD5Sum:9e901fbcbecd1142f9a00e17508d1263
+'https://deb.debian.org/debian/pool/main/g/gnutls28/libgnutls30t64_3.8.9-3%2bdeb13u4_i386.deb' libgnutls30t64_3.8.9-3+deb13u4_i386.deb 1466740 MD5Sum:7e21caa6c5463688db47e1c2bccff48e
+'https://deb.debian.org/debian/pool/main/libu/libunistring/libunistring5_1.3-2_amd64.deb' libunistring5_1.3-2_amd64.deb 476768 MD5Sum:954d362e7a674be8969e0c223782de72
+'https://deb.debian.org/debian/pool/main/libi/libidn2/libidn2-0_2.3.8-2_amd64.deb' libidn2-0_2.3.8-2_amd64.deb 109096 MD5Sum:c12f652b328832486b6992d355e52c29
+'https://deb.debian.org/debian/pool/main/p/p11-kit/libp11-kit0_0.25.5-3_amd64.deb' libp11-kit0_0.25.5-3_amd64.deb 425240 MD5Sum:d27fc7a8b7a7baac77b087b96d69d143
+'https://deb.debian.org/debian/pool/main/libt/libtasn1-6/libtasn1-6_4.20.0-2%2bdeb13u1_amd64.deb' libtasn1-6_4.20.0-2+deb13u1_amd64.deb 50112 MD5Sum:0dee8d137e0d8bbc8a57e721c13a5f66
+'https://deb.debian.org/debian/pool/main/g/gnutls28/libgnutls30t64_3.8.9-3%2bdeb13u4_amd64.deb' libgnutls30t64_3.8.9-3+deb13u4_amd64.deb 1469024 MD5Sum:ce391a9ff4974eba985481ee3eaf34a5
+'https://deb.debian.org/debian/pool/main/libu/libunwind/libunwind8_1.8.1-0.1_amd64.deb' libunwind8_1.8.1-0.1_amd64.deb 56252 MD5Sum:4d8d51711639eacfd68d0ef51f0b5688
+'https://deb.debian.org/debian/pool/main/libx/libxau/libxau6_1.0.11-1_i386.deb' libxau6_1%3a1.0.11-1_i386.deb 20744 MD5Sum:75b7df31e53ee3f2663bb1dc0c42bd98
+'https://deb.debian.org/debian/pool/main/libx/libxdmcp/libxdmcp6_1.1.5-1_i386.deb' libxdmcp6_1%3a1.1.5-1_i386.deb 28200 MD5Sum:e0e411df13d62e3380fd6fe5c3b576cc
+'https://deb.debian.org/debian/pool/main/libx/libxcb/libxcb1_1.17.0-2%2bb1_i386.deb' libxcb1_1.17.0-2+b1_i386.deb 148068 MD5Sum:4f5268d0f8cec1532b67f2875cfc296c
+'https://deb.debian.org/debian/pool/main/libx/libx11/libx11-data_1.8.12-1_all.deb' libx11-data_2%3a1.8.12-1_all.deb 343072 MD5Sum:1c54a8670f2640f5cf999c5da9d5f88c
+'https://deb.debian.org/debian/pool/main/libx/libx11/libx11-6_1.8.12-1_i386.deb' libx11-6_2%3a1.8.12-1_i386.deb 838484 MD5Sum:0ffbfeff6baf6dbc40e3e134f54aae9c
+'https://deb.debian.org/debian/pool/main/libx/libxau/libxau6_1.0.11-1_amd64.deb' libxau6_1%3a1.0.11-1_amd64.deb 20392 MD5Sum:4aec39848ed84d35bdd168928d7a37a5
+'https://deb.debian.org/debian/pool/main/libx/libxdmcp/libxdmcp6_1.1.5-1_amd64.deb' libxdmcp6_1%3a1.1.5-1_amd64.deb 27756 MD5Sum:94f9ea6d11adfdd4fa1469e8648f08ff
+'https://deb.debian.org/debian/pool/main/libx/libxcb/libxcb1_1.17.0-2%2bb1_amd64.deb' libxcb1_1.17.0-2+b1_amd64.deb 144340 MD5Sum:ab87e347ccb5ae730863b6989ea47b34
+'https://deb.debian.org/debian/pool/main/libx/libx11/libx11-6_1.8.12-1_amd64.deb' libx11-6_2%3a1.8.12-1_amd64.deb 815292 MD5Sum:723fec07f977145e0ed2c6ff8048a69d
+'https://deb.debian.org/debian/pool/main/libx/libxext/libxext6_1.3.4-1%2bb3_i386.deb' libxext6_2%3a1.3.4-1+b3_i386.deb 52480 MD5Sum:902d3777322533f025dcb9b4b6d492a3
+'https://deb.debian.org/debian/pool/main/libx/libxext/libxext6_1.3.4-1%2bb3_amd64.deb' libxext6_2%3a1.3.4-1+b3_amd64.deb 50448 MD5Sum:5c21b254e638c96f172728b5fb816ef8

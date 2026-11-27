@@ -1,0 +1,13 @@
+Started with pinned local source inputs in a new workspace.
+Packed 184 LINE files, 20 Microsoft DLL/catalog files, and Thai and emoji fonts
+/tmp/line-fresh-rebuild-91qkrqpw/offline/phase5/LINE-offline-26.6.0.4004-linux-x86_64.run
+Rebuilt .run SHA-256: 369ec453bb01b32766c2b3f02a31e63227092ca03352f8c6fd46861654dcfd6c
+Install LINE 26.6.0.4004 from this file on Debian 13 amd64.
+Usage: sudo sh /tmp/line-fresh-rebuild-91qkrqpw/offline/phase5/LINE-offline-26.6.0.4004-linux-x86_64.run
+Launch as your desktop user: line-offline
+PASS: reconstructed the tested .run with matching bytes in a clean workspace and an isolated network.
+Started a second build using a program-only pre-sign-in directory fixture and no snapshot in the build workspace.
+Packed 184 LINE files, 20 Microsoft DLL/catalog files, and Thai and emoji fonts
+/tmp/line-prelogin-source-test-a1l7jmc8/workspace/offline/phase5/LINE-offline-26.6.0.4004-linux-x86_64.run
+PASS: --installed-line-dir reproduced 369ec453bb01b32766c2b3f02a31e63227092ca03352f8c6fd46861654dcfd6c while excluding extra Data files.
+PASS: a mismatched LINE.exe was rejected.

@@ -1,0 +1,18 @@
+Verified checksums for the base image, Wine runner, and local Debian packages
+Debian 13.8 Slim amd64, no existing Wine prefix, loopback-only networking
+Installed the Wine runtime dependencies from local .deb files
+wine-11.0
+Created a fresh win64 prefix
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+Installed LINE 26.6.0.4004 in the new profile
+ce2f4b88857db34bfe4c5d9628daa814a42a75cf41540330d21b6ae5e5548447  /root/phase2-clean/drive_c/users/root/AppData/Local/LINE/bin/26.6.0.4004/LINE.exe
+xwininfo: Window id: 0x1800008 "LINE"
+  Width: 604
+  Height: 416
+  Map State: IsViewable
+0130:trace:loaddll:build_module Loaded L"C:\\users\\root\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\LINE.exe" at 0000000140000000: native
+0130:trace:loaddll:build_module Loaded L"C:\\users\\root\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native
+PASS: the LINE launcher opened a visible Qt window in the isolated prefix

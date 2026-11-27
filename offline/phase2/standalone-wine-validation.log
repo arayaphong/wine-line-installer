@@ -1,0 +1,12 @@
+Verified checksums for the base image, Wine runner, and local Debian packages
+Debian 13.8 Slim amd64, no existing Wine prefix, loopback-only networking
+Installed the Wine runtime dependencies from local .deb files
+wine-11.0
+Created a fresh win64 prefix
+wineserver: using server-side synchronization.
+Failed to open /etc/machine-id, error No such file or directory.
+system32 cmd.exe: PHASE2_ARCH=AMD64
+syswow64 cmd.exe: PHASE2_ARCH=x86
+     0xe00003 "Untitled - Notepad": ("steam_proton" "steam_proton")  721x519+4+23  +4+23
+  Map State: IsViewable
+PASS: offline standalone Wine, amd64 and i386 commands, and X11 window

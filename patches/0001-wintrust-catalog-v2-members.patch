@@ -1,0 +1,174 @@
+diff --git a/dlls/wintrust/crypt.c b/dlls/wintrust/crypt.c
+index ad6f264..c090777 100644
+--- a/dlls/wintrust/crypt.c
++++ b/dlls/wintrust/crypt.c
+@@ -460,6 +460,20 @@ BOOL WINAPI CryptCATAdminCalcHashFromFileHandle2(HCATADMIN catAdmin, HANDLE hFil
+ }
+ 
+ 
++static BOOL member_tag_matches_hash(const WCHAR *tag, const BYTE *hash, DWORD len)
++{
++    static const WCHAR hex[] = L"0123456789ABCDEF";
++    DWORD i;
++
++    if (!tag || lstrlenW(tag) != len * 2) return FALSE;
++    for (i = 0; i < len; i++)
++    {
++        if (tag[i * 2] != hex[hash[i] >> 4]) return FALSE;
++        if (tag[i * 2 + 1] != hex[hash[i] & 0xf]) return FALSE;
++    }
++    return TRUE;
++}
++
+ /***********************************************************************
+  *             CryptCATAdminEnumCatalogFromHash (WINTRUST.@)
+  */
+@@ -537,7 +551,9 @@ HCATINFO WINAPI CryptCATAdminEnumCatalogFromHash(HCATADMIN hCatAdmin, BYTE* pbHa
+         lstrcatW(filename, slashW);
+         lstrcatW(filename, data.cFileName);
+ 
+-        hcat = CryptCATOpen(filename, CRYPTCAT_OPEN_EXISTING, prov, 0, 0);
++        /* let crypt32 pick a provider: newer catalogs are hashed with SHA-256,
++         * which the PROV_RSA_FULL context acquired above doesn't support */
++        hcat = CryptCATOpen(filename, CRYPTCAT_OPEN_EXISTING, 0, 0, 0);
+         if (hcat == INVALID_HANDLE_VALUE)
+         {
+             WARN("couldn't open %s (%lu)\n", debugstr_w(filename), GetLastError());
+@@ -545,12 +561,17 @@ HCATINFO WINAPI CryptCATAdminEnumCatalogFromHash(HCATADMIN hCatAdmin, BYTE* pbHa
+         }
+         while ((member = CryptCATEnumerateMember(hcat, member)))
+         {
+-            if (member->pIndirectData->Digest.cbData != cbHash)
++            if (!member->pIndirectData)
++            {
++                /* catalog v2 members may carry only the hash as their subject identifier */
++                if (!member_tag_matches_hash(member->pwszReferenceTag, pbHash, cbHash)) continue;
++            }
++            else if (member->pIndirectData->Digest.cbData != cbHash)
+             {
+                 WARN("amount of hash bytes differs: %lu/%lu\n", member->pIndirectData->Digest.cbData, cbHash);
+                 continue;
+             }
+-            if (!memcmp(member->pIndirectData->Digest.pbData, pbHash, cbHash))
++            else if (memcmp(member->pIndirectData->Digest.pbData, pbHash, cbHash)) continue;
+             {
+                 TRACE("file %s matches\n", debugstr_w(data.cFileName));
+ 
+@@ -843,7 +864,8 @@ CRYPTCATMEMBER * WINAPI CryptCATEnumerateMember(HANDLE hCatalog, CRYPTCATMEMBER
+     struct cryptcat *cc = hCatalog;
+     CRYPTCATMEMBER *member = prev;
+     CTL_ENTRY *entry;
+-    DWORD size, i;
++    const BYTE *tag_data;
++    DWORD size, i, tag_len;
+ 
+     TRACE("%p, %p\n", hCatalog, prev);
+ 
+@@ -853,6 +875,13 @@ CRYPTCATMEMBER * WINAPI CryptCATEnumerateMember(HANDLE hCatalog, CRYPTCATMEMBER
+         return NULL;
+     }
+ 
++    if (!cc->inner)
++    {
++        /* opened, but the content couldn't be decoded */
++        SetLastError(CRYPT_E_NOT_FOUND);
++        return NULL;
++    }
++
+     /* dumping the contents makes me think that dwReserved is the iteration number */
+     if (!member)
+     {
+@@ -926,6 +955,12 @@ CRYPTCATMEMBER * WINAPI CryptCATEnumerateMember(HANDLE hCatalog, CRYPTCATMEMBER
+             free(mi);
+             if (!ret) goto error;
+         }
++        else if (!strcmp(attr->pszObjId, CAT_MEMBERINFO2_OBJID))
++        {
++            /* catalog v2 (Windows 8+): no subject GUID / cert version to decode */
++            member->sEncodedMemberInfo.cbData = attr->rgValue->cbData;
++            member->sEncodedMemberInfo.pbData = attr->rgValue->pbData;
++        }
+         else if (!strcmp(attr->pszObjId, SPC_INDIRECT_DATA_OBJID))
+         {
+             /* SPC_INDIRECT_DATA_CONTENT is equal to SIP_INDIRECT_DATA */
+@@ -933,27 +968,47 @@ CRYPTCATMEMBER * WINAPI CryptCATEnumerateMember(HANDLE hCatalog, CRYPTCATMEMBER
+             member->sEncodedIndirectData.cbData = attr->rgValue->cbData;
+             member->sEncodedIndirectData.pbData = attr->rgValue->pbData;
+ 
+-            CryptDecodeObject(cc->encoding, SPC_INDIRECT_DATA_OBJID, attr->rgValue->pbData, attr->rgValue->cbData, 0, NULL, &size);
++            if (!CryptDecodeObject(cc->encoding, SPC_INDIRECT_DATA_OBJID, attr->rgValue->pbData, attr->rgValue->cbData, 0, NULL, &size))
++            {
++                WARN("failed to decode indirect data (%lu)\n", GetLastError());
++                continue;
++            }
+ 
+             if (!(member->pIndirectData = malloc(size)))
+             {
+                 SetLastError(ERROR_OUTOFMEMORY);
+                 goto error;
+             }
+-            CryptDecodeObject(cc->encoding, SPC_INDIRECT_DATA_OBJID, attr->rgValue->pbData, attr->rgValue->cbData, 0, member->pIndirectData, &size);
++            if (!CryptDecodeObject(cc->encoding, SPC_INDIRECT_DATA_OBJID, attr->rgValue->pbData, attr->rgValue->cbData, 0, member->pIndirectData, &size))
++            {
++                WARN("failed to decode indirect data (%lu)\n", GetLastError());
++                free(member->pIndirectData);
++                member->pIndirectData = NULL;
++            }
+         }
+         else
+             /* this object id should probably be handled in CryptCATEnumerateAttr */
+             FIXME("unhandled object id \"%s\"\n", attr->pszObjId);
+     }
+ 
+-    if (!member->sEncodedMemberInfo.cbData || !member->sEncodedIndirectData.cbData)
++    if (!member->sEncodedMemberInfo.cbData)
+     {
+         ERR("Corrupted catalog entry?\n");
+         SetLastError(CRYPT_E_ATTRIBUTES_MISSING);
+         goto error;
+     }
+-    size = (2 * member->pIndirectData->Digest.cbData + 1) * sizeof(WCHAR);
++    if (member->pIndirectData)
++    {
++        tag_data = member->pIndirectData->Digest.pbData;
++        tag_len = member->pIndirectData->Digest.cbData;
++    }
++    else
++    {
++        /* catalog v2 hash-only member: the subject identifier is the file hash */
++        tag_data = entry->SubjectIdentifier.pbData;
++        tag_len = entry->SubjectIdentifier.cbData;
++    }
++    size = (2 * tag_len + 1) * sizeof(WCHAR);
+     member->pwszReferenceTag = realloc(member->pwszReferenceTag, size);
+ 
+     if (!member->pwszReferenceTag)
+@@ -962,13 +1017,13 @@ CRYPTCATMEMBER * WINAPI CryptCATEnumerateMember(HANDLE hCatalog, CRYPTCATMEMBER
+         goto error;
+     }
+     /* FIXME: reference tag is usually the file hash but doesn't have to be */
+-    for (i = 0; i < member->pIndirectData->Digest.cbData; i++)
++    for (i = 0; i < tag_len; i++)
+     {
+         DWORD sub;
+ 
+-        sub = member->pIndirectData->Digest.pbData[i] >> 4;
++        sub = tag_data[i] >> 4;
+         member->pwszReferenceTag[i * 2] = (sub < 10 ? '0' + sub : 'A' + sub - 10);
+-        sub = member->pIndirectData->Digest.pbData[i] & 0xf;
++        sub = tag_data[i] & 0xf;
+         member->pwszReferenceTag[i * 2 + 1] = (sub < 10 ? '0' + sub : 'A' + sub - 10);
+     }
+     member->pwszReferenceTag[i * 2] = 0;
+diff --git a/include/wintrust.h b/include/wintrust.h
+index 5964f13..c431d76 100644
+--- a/include/wintrust.h
++++ b/include/wintrust.h
+@@ -496,6 +496,7 @@ CRYPT_PROVIDER_PRIVDATA * WINAPI WTHelperGetProvPrivateDataFromChain(CRYPT_PROVI
+ #define SPC_SIGINFO_OBJID            "1.3.6.1.4.1.311.2.1.30"
+ #define CAT_NAMEVALUE_OBJID          "1.3.6.1.4.1.311.12.2.1"
+ #define CAT_MEMBERINFO_OBJID         "1.3.6.1.4.1.311.12.2.2"
++#define CAT_MEMBERINFO2_OBJID        "1.3.6.1.4.1.311.12.2.3"
+ 
+ #define SPC_SP_AGENCY_INFO_STRUCT        ((LPCSTR) 2000)
+ #define SPC_MINIMAL_CRITERIA_STRUCT      ((LPCSTR) 2001)

@@ -1,0 +1,32 @@
+diff --git a/dlls/ntdll/misc.c b/dlls/ntdll/misc.c
+index 81ac7b3..7d5ff44 100644
+--- a/dlls/ntdll/misc.c
++++ b/dlls/ntdll/misc.c
+@@ -513,3 +513,15 @@ ULONG WINAPIV EtwTraceMessage( TRACEHANDLE handle, ULONG flags, LPGUID guid, /*U
+     va_end( valist );
+     return ret;
+ }
++
++/*********************************************************************
++ *                  SbSelectProcedure   (NTDLL.@)
++ *
++ * Switchback: picks an OS-context specific implementation from a table.
++ * Returning NULL makes callers (e.g. Windows 10/11 dwmapi) use their default path.
++ */
++void * WINAPI SbSelectProcedure( ULONG signature, ULONG unknown, void *table, ULONG index )
++{
++    FIXME( "(%#lx, %#lx, %p, %lu): stub\n", signature, unknown, table, index );
++    return NULL;
++}
+diff --git a/dlls/ntdll/ntdll.spec b/dlls/ntdll/ntdll.spec
+index 32b1d5e..bc59318 100644
+--- a/dlls/ntdll/ntdll.spec
++++ b/dlls/ntdll/ntdll.spec
+@@ -1146,6 +1146,7 @@
+ @ stdcall RtlWriteRegistryValue(long ptr wstr long ptr long)
+ @ stub RtlZeroHeap
+ @ stdcall RtlZeroMemory(ptr long)
++@ stdcall SbSelectProcedure(long long ptr long)
+ @ stdcall RtlZombifyActivationContext(ptr)
+ # @ stub RtlpApplyLengthFunction
+ # @ stub RtlpEnsureBufferSize

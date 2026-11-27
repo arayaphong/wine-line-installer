@@ -1,0 +1,27 @@
+diff --git a/dlls/secur32/schannel.c b/dlls/secur32/schannel.c
+index 8ce0ac8..72e22aa 100644
+--- a/dlls/secur32/schannel.c
++++ b/dlls/secur32/schannel.c
+@@ -18,6 +18,7 @@
+  * This file implements the schannel provider, or, the SSL/TLS implementations.
+  */
+ 
++#define CRYPT_OID_INFO_HAS_EXTRA_FIELDS
+ #include <assert.h>
+ #include <stdarg.h>
+ #include <stdlib.h>
+@@ -1252,7 +1253,13 @@ static SECURITY_STATUS SEC_ENTRY schan_QueryContextAttributesW(
+ 
+         /* RFC 5929 */
+         info = CryptFindOIDInfo(CRYPT_OID_INFO_OID_KEY, ctx->cert->pCertInfo->SignatureAlgorithm.pszObjId, 0);
+-        if (info && info->Algid != CALG_SHA1 && info->Algid != CALG_MD5) hash_alg = info->Algid;
++        if (info && info->Algid == CALG_OID_INFO_CNG_ONLY && info->pwszCNGAlgid)
++        {
++            /* e.g. ecdsa-with-SHA384: only the CNG hash name is known */
++            if (!wcscmp(info->pwszCNGAlgid, L"SHA384")) hash_alg = CALG_SHA_384;
++            else if (!wcscmp(info->pwszCNGAlgid, L"SHA512")) hash_alg = CALG_SHA_512;
++        }
++        else if (info && info->Algid != CALG_SHA1 && info->Algid != CALG_MD5) hash_alg = info->Algid;
+ 
+         hash_size = sizeof(hash);
+         ret = CryptHashCertificate(0, hash_alg, 0, ctx->cert->pbCertEncoded, ctx->cert->cbCertEncoded, hash, &hash_size);

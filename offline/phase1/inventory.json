@@ -1,0 +1,702 @@
+{
+  "schema_version": 1,
+  "phase": 1,
+  "recorded_on": "2026-11-26",
+  "target_artifact": "LINE-offline-26.6.0.4004-linux-x86_64.run",
+  "base_image": {
+    "distribution": "Debian GNU/Linux 13.8 (trixie) Slim",
+    "platform": "linux/amd64",
+    "upstream_ref": "docker.io/library/debian:13-slim",
+    "published_utc": "2026-11-23T00:00:00Z",
+    "upstream_index_digest": "sha256:8aa5a7bf5a1955bddbe7d74fcdd0b91ab30e74362a8b73af672b0481b35b44a0",
+    "upstream_platform_manifest_digest": "sha256:ab3b3c8c5159eebfca4376430132d53c4d425f869c765ecbe47177a030da575d",
+    "upstream_config_digest": "sha256:cf7c9dcedc058a74762f2e1f01f6254e2376f3752452ddb347c1bb2a17618fd7",
+    "layers": [
+      {
+        "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+        "digest": "sha256:40748add9f4f6f944f334cbfc286590d6e93f60fb06f6ee7ffa1b894080ad861",
+        "size": 29842182
+      }
+    ],
+    "rootfs_diff_ids": [
+      "sha256:54ae9782e24f4abba5eebc5cc388f983b590abb011b69f20e0e592240bb7a698"
+    ],
+    "offline_archive": {
+      "path": "offline/phase1/debian-13-slim-amd64.image.tar",
+      "size_bytes": 29849600,
+      "sha256": "3b53f325fcc9f1b31df4c532a4d26793da67570748a5976c16727ced8a336625"
+    },
+    "archive_checksum": "offline/phase1/debian-13-slim-amd64.image.tar.sha256",
+    "local_reference": "line-offline-test:debian-13-slim-amd64",
+    "validation_log": "offline/phase1/debian-base-validation.log",
+    "verified_on_host": "Isolated network namespace (loopback only); rootfs chroot and containerd local import in a disposable store",
+    "docker_daemon_active": false,
+    "base_glibc": "2.41-12+deb13u5",
+    "base_commands": [
+      "sh",
+      "tar",
+      "gzip",
+      "sha256sum"
+    ],
+    "absence_checked": [
+      "wine",
+      "wine64",
+      "wineserver",
+      "flatpak",
+      "bottles-cli",
+      "root Wine prefix"
+    ]
+  },
+  "line_payload": {
+    "version": "26.6.0.4004",
+    "installed_executable_reference": {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.exe",
+      "size_bytes": 31071680,
+      "sha256": "ce2f4b88857db34bfe4c5d9628daa814a42a75cf41540330d21b6ae5e5548447"
+    },
+    "bootstrapper": {
+      "path": "LineInst.exe",
+      "size_bytes": 903088,
+      "sha256": "5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462",
+      "local_copy": {
+        "path": "~/.var/app/com.usebottles.bottles/data/bottles/temp/LineInst.exe",
+        "size_bytes": 903088,
+        "sha256": "5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462"
+      },
+      "pe_machine": "i386",
+      "classification": "online_bootstrapper"
+    },
+    "msix": {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.msix",
+      "size_bytes": 12198,
+      "sha256": "2c2324723ff6c73a50c87cfae8a893b8f6949599173a64f45ad6cc2c3c5e4592",
+      "classification": "connector_metadata_not_full_installer",
+      "packaged_identity_version": "26.6.0.0",
+      "application_executables": [
+        "LineConnector.exe"
+      ],
+      "members": [
+        {
+          "name": "AppxManifest.xml",
+          "size_bytes": 13062
+        },
+        {
+          "name": "AppxBlockMap.xml",
+          "size_bytes": 405
+        },
+        {
+          "name": "[Content_Types].xml",
+          "size_bytes": 398
+        },
+        {
+          "name": "AppxSignature.p7x",
+          "size_bytes": 12396
+        }
+      ],
+      "contains_application_executable": false,
+      "rea_evidence": "ev_561aeda9b173736f68fab7586f379ca6422b846539d7e85e93ea863c63bf3830"
+    },
+    "post_install_snapshot": {
+      "path": "baseline/post-install/LINE-postinstall.tar.zst",
+      "size_bytes": 336458661,
+      "sha256": "d712c4e2af6dc2b949e8147c559d3fd15d43671051a526020f42356e6a28e6d2",
+      "classification": "source_candidate_extract_allowlisted_files_only",
+      "member_counts": {
+        "members": 5732,
+        "versioned_bin_files": 181,
+        "versioned_bin_bytes": 140616497,
+        "registry_files": 3
+      },
+      "versioned_bin_references": {
+        "LINE.exe": {
+          "archive_member": "LINE/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.exe",
+          "size_bytes": 31071680,
+          "sha256": "ce2f4b88857db34bfe4c5d9628daa814a42a75cf41540330d21b6ae5e5548447"
+        },
+        "LINE.msix": {
+          "archive_member": "LINE/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LINE.msix",
+          "size_bytes": 12198,
+          "sha256": "2c2324723ff6c73a50c87cfae8a893b8f6949599173a64f45ad6cc2c3c5e4592"
+        },
+        "LineLauncher.exe": {
+          "archive_member": "LINE/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineLauncher.exe",
+          "size_bytes": 1807280,
+          "sha256": "8021e6eb2dc9cd3b81c86234f3b64dd8a0c82f9890c85b8844e66460934901fb"
+        },
+        "LineUnInst.exe": {
+          "archive_member": "LINE/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/LineUnInst.exe",
+          "size_bytes": 172952,
+          "sha256": "9d54ee2db0e9daea600348d2642189d57550ecc0617de5558de97301618d5c97"
+        }
+      },
+      "line_data_members_outside_bin": [
+        "installLang.ini"
+      ],
+      "matches_current_line_exe": true
+    },
+    "full_offline_installer_local_search": {
+      "status": "not_located",
+      "filename_patterns": [
+        "LineInst_*.exe",
+        "LINE.zip"
+      ],
+      "scopes": [
+        "current LINE-repro drive_c (LINE profile Data folders excluded)",
+        "Bottles temp (Windows ISO/service-pack trees excluded)",
+        "Downloads, prior LINE bottles in Trash if present, and the post-install snapshot"
+      ],
+      "next_candidate": "Build a clean installed-program payload using allowlisted snapshot files if no local standalone installer is verified."
+    }
+  },
+  "runner": {
+    "version": "soda-11.0-10-line",
+    "base_version": "soda-11.0-10",
+    "valve_wine_commit": "0509a0b64a4852741364c95bcdc67ae8f74ef11d",
+    "location": "~/.var/app/com.usebottles.bottles/data/bottles/runners/soda-11.0-10-line",
+    "full_tree_inventory": {
+      "path": "offline/phase1/wine-runner-manifest.json",
+      "size_bytes": 983151,
+      "sha256": "73795af68fdf0bb80f91a0ca060a983b39d7f0cfabdf255db1bfebd95e9333bc"
+    },
+    "regular_file_count": 4485,
+    "regular_logical_bytes": 758943339,
+    "unique_regular_inode_bytes": 758943339,
+    "symlink_count": 16,
+    "links_outside_runner": [],
+    "linked_elf_requirements": {
+      "amd64": {
+        "elf_files": 52,
+        "highest_required_glibc_symbol_version": "2.38",
+        "direct_dt_needed": [
+          "libOpenCL.so.1",
+          "libX11.so.6",
+          "libXext.so.6",
+          "libasound.so.2",
+          "libavcodec.so.60",
+          "libavformat.so.60",
+          "libavutil.so.58",
+          "libc.so.6",
+          "libcapi20.so.3",
+          "libdrm.so.2",
+          "libdrm_amdgpu.so.1",
+          "libglib-2.0.so.0",
+          "libgobject-2.0.so.0",
+          "libgphoto2.so.6",
+          "libgphoto2_port.so.12",
+          "libgstaudio-1.0.so.0",
+          "libgstbase-1.0.so.0",
+          "libgstgl-1.0.so.0",
+          "libgstreamer-1.0.so.0",
+          "libgsttag-1.0.so.0",
+          "libgstvideo-1.0.so.0",
+          "libm.so.6",
+          "libopenxr_loader.so.1",
+          "libpcap.so.0.8",
+          "libpulse.so.0",
+          "libsane.so.1",
+          "libudev.so.1",
+          "libunwind.so.8",
+          "libusb-1.0.so.0",
+          "libwayland-client.so.0",
+          "libwayland-egl.so.1",
+          "libxkbcommon.so.0",
+          "libxkbregistry.so.0",
+          "ntdll.so",
+          "win32u.so"
+        ],
+        "external_sonames_absent_from_base": [
+          "libOpenCL.so.1",
+          "libX11.so.6",
+          "libXext.so.6",
+          "libasound.so.2",
+          "libavcodec.so.60",
+          "libavformat.so.60",
+          "libavutil.so.58",
+          "libcapi20.so.3",
+          "libdrm.so.2",
+          "libdrm_amdgpu.so.1",
+          "libglib-2.0.so.0",
+          "libgobject-2.0.so.0",
+          "libgphoto2.so.6",
+          "libgphoto2_port.so.12",
+          "libgstaudio-1.0.so.0",
+          "libgstbase-1.0.so.0",
+          "libgstgl-1.0.so.0",
+          "libgstreamer-1.0.so.0",
+          "libgsttag-1.0.so.0",
+          "libgstvideo-1.0.so.0",
+          "libopenxr_loader.so.1",
+          "libpcap.so.0.8",
+          "libpulse.so.0",
+          "libsane.so.1",
+          "libunwind.so.8",
+          "libusb-1.0.so.0",
+          "libwayland-client.so.0",
+          "libwayland-egl.so.1",
+          "libxkbcommon.so.0",
+          "libxkbregistry.so.0"
+        ],
+        "external_sonames_present_in_base": [
+          "libc.so.6",
+          "libm.so.6",
+          "libudev.so.1"
+        ],
+        "baseline_comparison_scope": "Checks the expected ABI-specific rootfs paths by filename only; optional Wine modules may not load, and transitive/dlopen requirements are not covered."
+      },
+      "i386": {
+        "elf_files": 41,
+        "highest_required_glibc_symbol_version": "2.38",
+        "direct_dt_needed": [
+          "libOpenCL.so.1",
+          "libX11.so.6",
+          "libXext.so.6",
+          "libasound.so.2",
+          "libavcodec.so.60",
+          "libavformat.so.60",
+          "libavutil.so.58",
+          "libc.so.6",
+          "libcapi20.so.3",
+          "libdrm.so.2",
+          "libdrm_amdgpu.so.1",
+          "libglib-2.0.so.0",
+          "libgobject-2.0.so.0",
+          "libgphoto2.so.6",
+          "libgphoto2_port.so.12",
+          "libgstaudio-1.0.so.0",
+          "libgstbase-1.0.so.0",
+          "libgstgl-1.0.so.0",
+          "libgstreamer-1.0.so.0",
+          "libgsttag-1.0.so.0",
+          "libgstvideo-1.0.so.0",
+          "libm.so.6",
+          "libpcap.so.0.8",
+          "libpulse.so.0",
+          "libsane.so.1",
+          "libudev.so.1",
+          "libusb-1.0.so.0",
+          "libwayland-client.so.0",
+          "libwayland-egl.so.1",
+          "libxkbcommon.so.0",
+          "libxkbregistry.so.0",
+          "ntdll.so",
+          "win32u.so"
+        ],
+        "external_sonames_absent_from_base": [
+          "libOpenCL.so.1",
+          "libX11.so.6",
+          "libXext.so.6",
+          "libasound.so.2",
+          "libavcodec.so.60",
+          "libavformat.so.60",
+          "libavutil.so.58",
+          "libc.so.6",
+          "libcapi20.so.3",
+          "libdrm.so.2",
+          "libdrm_amdgpu.so.1",
+          "libglib-2.0.so.0",
+          "libgobject-2.0.so.0",
+          "libgphoto2.so.6",
+          "libgphoto2_port.so.12",
+          "libgstaudio-1.0.so.0",
+          "libgstbase-1.0.so.0",
+          "libgstgl-1.0.so.0",
+          "libgstreamer-1.0.so.0",
+          "libgsttag-1.0.so.0",
+          "libgstvideo-1.0.so.0",
+          "libm.so.6",
+          "libpcap.so.0.8",
+          "libpulse.so.0",
+          "libsane.so.1",
+          "libudev.so.1",
+          "libusb-1.0.so.0",
+          "libwayland-client.so.0",
+          "libwayland-egl.so.1",
+          "libxkbcommon.so.0",
+          "libxkbregistry.so.0"
+        ],
+        "external_sonames_present_in_base": [],
+        "baseline_comparison_scope": "Checks the expected ABI-specific rootfs paths by filename only; optional Wine modules may not load, and transitive/dlopen requirements are not covered."
+      }
+    },
+    "dependency_scope": "Read-only ELF DT_NEEDED and version-needs inventory. Runtime dlopen, graphics, audio, loader behavior, i386 launch and package closure require phase 2.",
+    "standalone_wine_on_chosen_image": "not_tested",
+    "patches": [
+      {
+        "path": "patches/0001-wintrust-catalog-v2-members.patch",
+        "size_bytes": 7566,
+        "sha256": "e0475efa11b6c6c6d4c56644b1645dea7b74008ee5273ca2e84f7350eb2e0cf2"
+      },
+      {
+        "path": "patches/0002-ntdll-SbSelectProcedure-stub.patch",
+        "size_bytes": 1207,
+        "sha256": "8d922e72e1dde5f8e44b8e408999f41ea75f43b99d395ea2cb5629dbe655ca0d"
+      },
+      {
+        "path": "patches/0003-secur32-endpoint-bindings-cng-hash.patch",
+        "size_bytes": 1297,
+        "sha256": "5b449a4d9b829d8cb0a0c6ad8f04179f710cfd4e1621a8c4fef4dbf9a29b8a05"
+      },
+      {
+        "path": "patches/0004-dwrite-legacy-qt-color-glyph-run.patch",
+        "size_bytes": 2276,
+        "sha256": "b7206f750d1187931f92ecf9624c3f4826330acfbc493ee34c35acbb91a9c799"
+      }
+    ]
+  },
+  "dll_and_catalogs": {
+    "microsoft_x86": [
+      {
+        "path": "ms-dlls/x86/dwmapi.dll",
+        "size_bytes": 132936,
+        "sha256": "b57e484bf23ac0c23c97040939924896de7801524abfc29dd59cff2ba08c3ef5",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "ms-dlls/x86/gdiplus.dll",
+        "size_bytes": 1624576,
+        "sha256": "c07a936009fb275d56dc451c7d05b5f5a3f4dcd985c7f02dee57d674034c602b",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "ms-dlls/x86/msimg32.dll",
+        "size_bytes": 7168,
+        "sha256": "bbaadf19b537a0641c0d10429af64df5449b7427a18c4aa60b5cc16610b33dbf",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "ms-dlls/x86/webio.dll",
+        "size_bytes": 316416,
+        "sha256": "42a60bc707db0b42214a8c679e0a15ae46944d9d97c35d8293ab294dc759a800",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "ms-dlls/x86/winhttp.dll",
+        "size_bytes": 351744,
+        "sha256": "c3a9f7628b10bad8661f55bdcfb850e91b729f42731e6e9929fc7b4574b3c012",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "ms-dlls/x86/catroot/Microsoft-Windows-Client-Desktop-Required-WOW64-Package0010~31bf3856ad364e35~amd64~~10.0.26100.9457.cat",
+        "size_bytes": 505259,
+        "sha256": "8dff4bb63ee51a6d9fa89b328d5383040c5b726153e3a407543af35b49256201"
+      },
+      {
+        "path": "ms-dlls/x86/catroot/microsoft-windows-foundation-package~31bf3856ad364e35~x86~~6.1.7601.17514.cat",
+        "size_bytes": 2107333,
+        "sha256": "679d2ea88f5f1f6eb6433c082f684551152225370892524b0bb5475cc15cdbdf"
+      },
+      {
+        "path": "ms-dlls/x86/catroot/package_1_for_kb3140245~31bf3856ad364e35~x86~~6.1.1.0.cat",
+        "size_bytes": 13151,
+        "sha256": "fb36e901c427ca188385523f7bd84ab0068948c9ffe1b415405b6833042f84b0"
+      }
+    ],
+    "microsoft_x64_on_disk": [
+      {
+        "path": "ms-dlls/x64-ondisk/crypt32.dll",
+        "size_bytes": 1559296,
+        "sha256": "c720af58976a3624dbc5b74ec4e470d8fec8a4645dc06947906c49e929862dc3",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/dwmapi.dll",
+        "size_bytes": 187496,
+        "sha256": "434edd020c6eb30aee968004641fce6b21569e53f21695250b5055c4a93904c2",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/dxgi.dll",
+        "size_bytes": 1294864,
+        "sha256": "b12aebf0f077d6c1394b50e2eecdd5e16072c9a0c871f30887b5d170cbf2eaae",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/mfplat.dll",
+        "size_bytes": 2265912,
+        "sha256": "7efbd9c61720ab2a9f313014e8d597039debbe5ce412f509e2e0c6f334f9124d",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/msimg32.dll",
+        "size_bytes": 32768,
+        "sha256": "05fd8f6ccf4025ed4841c6d7f2264d6ff33d22b3470db47628c933b0096ed3fd",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/userenv.dll",
+        "size_bytes": 224656,
+        "sha256": "e5e77885cbac08ac247fa45916eca36d2fde292a8527ac2c428f36a691827fea",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/version.dll",
+        "size_bytes": 55192,
+        "sha256": "cea99f212af557a9613150c5509631403ed0f05f5d9a06ac42039bd59b40e39a",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/winhttp.dll",
+        "size_bytes": 1232864,
+        "sha256": "d15f756221196eea7d2d8099bdb68f9500d8f2ad45ab7a0fb68bea100c44e7f8",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/wininet.dll",
+        "size_bytes": 2716272,
+        "sha256": "05a7f7b08972384fb6ef6c3dd6f2513eda540d11dd1728d8156699e47202b3d1",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/winmm.dll",
+        "size_bytes": 224688,
+        "sha256": "b79ba5420f10d76fddc718534c37db671b04fdb07d3bef4152a799b85a4368b7",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/catroot/Microsoft-OneCore-CoreSystem-Core-merged-Package~31bf3856ad364e35~amd64~~10.0.26100.9457.cat",
+        "size_bytes": 284146,
+        "sha256": "bc9e1c08b54d2d05965172b7d51905db7bc6ce832974b20ceac0a9bcfde85dd8"
+      },
+      {
+        "path": "ms-dlls/x64-ondisk/catroot/Microsoft-Windows-Client-Desktop-Required-Package0415~31bf3856ad364e35~amd64~~10.0.26100.9457.cat",
+        "size_bytes": 454805,
+        "sha256": "f132eb8e12b64aba7be51bdff771eba47dfb0902e72fc63647a9817fdcb0c28a"
+      }
+    ],
+    "wine_patched": [
+      {
+        "path": "wine-src/out/i386-windows/dnsapi.dll",
+        "size_bytes": 102400,
+        "sha256": "d581978c7a753befa8f9e6d0a382a19ec912430eefb9e25bbd40a609d0531856",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "wine-src/out/i386-windows/ntdll.dll",
+        "size_bytes": 794624,
+        "sha256": "69075d8694ceaf5ad01bbdfa7a4e5635dbae2c76982f7abda1e6e9b295f83e11",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "wine-src/out/i386-windows/secur32.dll",
+        "size_bytes": 475136,
+        "sha256": "a7677c09a37167929207a459d0b2a509e95b0e658c0699eced4d69209a0d4b3e",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "wine-src/out/i386-windows/user32.dll",
+        "size_bytes": 1970176,
+        "sha256": "88dcd4ab6dddaab9bcefc640156a741e098f6ede226d0d217ecdd18b9fb4305a",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "wine-src/out/i386-windows/wintrust.dll",
+        "size_bytes": 540672,
+        "sha256": "64bfbd4b5b3c9503c0f2bf0c63fb9c2141ea49a509e29cd7794e4cf662530994",
+        "pe_machine": "i386"
+      },
+      {
+        "path": "wine-src/out/x86_64-windows/dwrite.dll",
+        "size_bytes": 2465792,
+        "sha256": "908b2c9c6302f816f478230a98fad39ae20653b1d6a4bf28335763a41268aab6",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "wine-src/out/x86_64-windows/secur32.dll",
+        "size_bytes": 589824,
+        "sha256": "48e579deaa4d43cc9babda285e22cb6ffc3f4c9f251186aa595efd819171bfc3",
+        "pe_machine": "amd64"
+      },
+      {
+        "path": "wine-src/out/x86_64-windows/wintrust.dll",
+        "size_bytes": 622592,
+        "sha256": "f8fa2a0d184295b494c387c38564c94b1d0aa5c2ab4df6c69fc722d8a2231bfb",
+        "pe_machine": "amd64"
+      }
+    ]
+  },
+  "kbs_provenance_only": [
+    {
+      "path": "ms-dlls/source/windows6.1-kb3140245-x86_cdafb409afbe28db07e2254f40047774a0654f18.msu",
+      "size_bytes": 497084,
+      "sha256": "0b08390e2f2b12e4e89af45829c0645081920fb93abe604d6d850a1f0a92be43"
+    }
+  ],
+  "settings": {
+    "dll_overrides_key": "HKCU\\Software\\Wine\\DllOverrides",
+    "project_dll_overrides": {
+      "crypt32": "builtin",
+      "dwmapi": "builtin",
+      "dxgi": "builtin",
+      "mfplat": "builtin",
+      "msimg32": "builtin",
+      "userenv": "builtin",
+      "version": "builtin",
+      "winhttp": "builtin",
+      "wininet": "builtin",
+      "winmm": "builtin",
+      "gdiplus": "native,builtin",
+      "webio": "native,builtin"
+    },
+    "font_registration_key": "HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts",
+    "qt_conf": {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/users/arme/AppData/Local/LINE/bin/26.6.0.4004/qt.conf",
+      "size_bytes": 49,
+      "sha256": "78f0072f73597c81351073120494067617f08c1c8922c25a04e023228a3960c7",
+      "current_windows_arguments": "fontengine=native",
+      "monochrome_fallback_windows_arguments": "fontengine=directwrite"
+    },
+    "wine_color_opt_in": {
+      "key": "HKCU\\Software\\Wine\\AppDefaults\\LINE.exe\\DirectWrite",
+      "name": "PrimeColorGlyphRun",
+      "type": "REG_DWORD",
+      "value": 1
+    }
+  },
+  "font_candidates": [
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/NotoEmoji.ttf",
+      "size_bytes": 1982596,
+      "sha256": "de6c18832938afc99caf132b39d6a30a19bac7f2e812e28db2535b4608d27551",
+      "families": [
+        "Noto Emoji"
+      ],
+      "registry_name": "Noto Emoji (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "monochrome-fallback",
+      "known_upstream": "https://github.com/google/fonts/blob/main/ofl/notoemoji/NotoEmoji%5Bwght%5D.ttf"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/seguiemj.ttf",
+      "size_bytes": 2072388,
+      "sha256": "7c0244dd8eeb7c6bdecdfc3f9e59833527fc18a66d0295ce47339069692a2b4f",
+      "families": [
+        "Segoe UI Emoji"
+      ],
+      "registry_name": "Segoe UI Emoji (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "color-probe"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/NotoColorEmoji.ttf",
+      "size_bytes": 10730124,
+      "sha256": "15671215ab769fdc7162a045d56fd7d7e477c51b04e6b3c761d914d8fdd6cc44",
+      "families": [
+        "Noto Color Emoji"
+      ],
+      "registry_name": "Noto Color Emoji (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "additional-registered-font"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/seguisym.ttf",
+      "size_bytes": 2454728,
+      "sha256": "d2f8326a354456d93e78b0537c58793e7072c3617af7d9ee187f10d6d595f510",
+      "families": [
+        "Segoe UI Symbol"
+      ],
+      "registry_name": "Segoe UI Symbol (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "symbol-fallback"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/NotoSansThai-Regular.ttf",
+      "size_bytes": 37780,
+      "sha256": "61cf814eec46b294d6ea4401ac295d0cecd5207bd2331dcc5a15e7301d30ee44",
+      "families": [
+        "Noto Sans Thai"
+      ],
+      "registry_name": "Noto Sans Thai (TrueType)",
+      "registered_in_current_bottle": false,
+      "role_in_test_set": "thai-sample"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/NotoSansThai-Bold.ttf",
+      "size_bytes": 37824,
+      "sha256": "2ac6c6e8a478e23b15f76e4894af1fa2210f8f350e4e6e54aad530bec03efbfb",
+      "families": [
+        "Noto Sans Thai"
+      ],
+      "registry_name": "Noto Sans Thai Bold (TrueType)",
+      "registered_in_current_bottle": false,
+      "role_in_test_set": "thai-sample"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/tahoma.ttf",
+      "size_bytes": 383804,
+      "sha256": "08f45bf539954d3252df97a2ae563362ed2ad5ebe05f2d1f2bc54b931e4d0550",
+      "families": [
+        "Tahoma"
+      ],
+      "registry_name": "Tahoma (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "ui-and-color-probe"
+    },
+    {
+      "path": "~/.var/app/com.usebottles.bottles/data/bottles/bottles/LINE-repro/drive_c/windows/Fonts/tahomabd.ttf",
+      "size_bytes": 355680,
+      "sha256": "4ba89e145ff39f208151ce269841899fc4e4a360189a4a31dc2359168dae27d0",
+      "families": [
+        "Tahoma"
+      ],
+      "registry_name": "Tahoma Bold (TrueType)",
+      "registered_in_current_bottle": true,
+      "role_in_test_set": "ui-companion"
+    }
+  ],
+  "existing_setup_sources": [
+    {
+      "path": "scripts/setup_line_bottle.sh",
+      "size_bytes": 3720,
+      "sha256": "d9c452347e820dae0c9a4ff5de4085ba0d06a9965b8179333fdb00487def8e52"
+    },
+    {
+      "path": "scripts/build_line_runner.sh",
+      "size_bytes": 2905,
+      "sha256": "2296638cac55a4708e6fec1ff796fbd477cb51fdbbbd6b55549b110584fcbcdb"
+    },
+    {
+      "path": "scripts/build_wine_dlls.sh",
+      "size_bytes": 2553,
+      "sha256": "925827903270fdb28710255cccb24a1c8f7513b765322ce3b0a1259a01fab45d"
+    },
+    {
+      "path": "scripts/install_ms_dlls.sh",
+      "size_bytes": 2187,
+      "sha256": "d715caba609a0f0581491704f2a42d61866ba6af20cb04e38b15d679fba87559"
+    },
+    {
+      "path": "scripts/install_ondisk_ms_dlls.sh",
+      "size_bytes": 3657,
+      "sha256": "0311c5b949572825b0ece3c807f49e9de2d5bf5e54b6ef53c9607f0290a8149c"
+    },
+    {
+      "path": "scripts/override_dll.sh",
+      "size_bytes": 997,
+      "sha256": "20482d5a92cefa6f08ecbd9c780b889e20d585e2c0dcc7073244c30799f09a03"
+    },
+    {
+      "path": "scripts/lock_line_updater.sh",
+      "size_bytes": 683,
+      "sha256": "b09b6427d994d89fe68a8f78ea7ad000f443f66b14a26cb13f3abaacc702fa3c"
+    }
+  ],
+  "verification_artifacts": {
+    "line-emoji-color-patch-20261126.png": {
+      "path": "analysis/line-emoji-color-patch-20261126.png",
+      "size_bytes": 44979,
+      "sha256": "2915726bda1e5598b166a85c224411585c58dd7df4553bd5c04045f896356978"
+    }
+  },
+  "missing_or_unproven": [
+    "A verified offline LINE installation route (the existing LineInst.exe is the online bootstrapper).",
+    "Standalone Wine restart and DLL loading from the pinned clean Debian image and a closed offline dependency set.",
+    "A program-only allowlist from the seed snapshot and a rebuild of just the registry values needed in a new account.",
+    "Minimal font set and emoji behavior in the new prefix.",
+    "Installer file and a final test of that file in a new network-isolated image."
+  ],
+  "do_not_package": [
+    "Full live LINE-repro prefix, registry dumps as-is, or any data from the logged-in app profile.",
+    "Entire Windows ISO/WIM, legacy DLL alternatives, or all synced host fonts when verified individual inputs suffice.",
+    "Existing handoff tar as the offline deliverable."
+  ]
+}

@@ -1,0 +1,109 @@
+#!/bin/sh
+set -eu
+export LC_ALL=C DEBIAN_FRONTEND=noninteractive
+umask 022
+
+version='@LINE_VERSION@'
+payload_sha256='@PAYLOAD_SHA256@'
+install_root=/opt/line-offline
+release=$install_root/$version-$(printf '%.12s' "$payload_sha256")
+command_path=/usr/local/bin/line-offline
+
+case $# in
+  0) ;;
+  1)
+    if [ "$1" = --help ]; then
+      printf 'Install LINE %s from this file on Debian 13 amd64.\n' "$version"
+      printf 'Usage: sudo sh %s\nLaunch as your desktop user: line-offline\n' "$0"
+      exit 0
+    fi
+    printf 'Unknown installer argument: %s\n' "$1" >&2
+    exit 2
+    ;;
+  *) echo 'Use --help for installer usage.' >&2; exit 2 ;;
+esac
+
+if [ "$(id -u)" -ne 0 ]; then
+  echo 'Run the installer as root to install the bundled Debian runtime packages.' >&2
+  exit 1
+fi
+. /etc/os-release
+if [ "${ID:-}" != debian ] || [ "${VERSION_ID:-}" != 13 ] ||
+    [ "$(dpkg --print-architecture)" != amd64 ]; then
+  echo 'This installer targets Debian 13 amd64.' >&2
+  exit 1
+fi
+
+installer=$(readlink -f -- "$0")
+payload_line=$(awk '$0 == "__LINE_OFFLINE_PAYLOAD__" {print NR + 1; exit}' "$installer")
+if [ -z "$payload_line" ]; then
+  echo 'The installer archive is missing.' >&2
+  exit 1
+fi
+
+mkdir -p -- "$install_root" /usr/local/bin
+exec 9>"$install_root/.install.lock"
+flock 9
+if [ -e "$command_path" ] || [ -L "$command_path" ]; then
+  case $(readlink -- "$command_path" || true) in
+    "$install_root"/*/line-offline) ;;
+    *) printf 'This path is already in use: %s\n' "$command_path" >&2; exit 1 ;;
+  esac
+fi
+
+stage=$(mktemp -d "$install_root/.install.XXXXXXXX")
+trap 'rm -r -- "$stage"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+mkdir "$stage/input"
+echo 'Verifying the embedded archive...'
+tail -n "+$payload_line" "$installer" > "$stage/input.tar"
+if ! printf '%s  %s\n' "$payload_sha256" "$stage/input.tar" | sha256sum --quiet -c -; then
+  echo 'The embedded archive failed verification.' >&2
+  exit 1
+fi
+tar --no-same-owner -xf "$stage/input.tar" -C "$stage/input"
+
+bundled_glibc=$(dpkg-deb -f "$stage"/input/runtime-debs/libc6_*_i386.deb Version)
+host_glibc=$(dpkg-query -W -f='${Version}' libc6:amd64)
+if [ "$host_glibc" != "$bundled_glibc" ]; then
+  printf 'The bundled i386 libc6 requires libc6:amd64 %s. Found %s.\n' "$bundled_glibc" "$host_glibc" >&2
+  exit 1
+fi
+
+if [ -d "$release" ]; then
+  if [ "$(cat "$release/bundle.sha256")" != "$payload_sha256" ] ||
+      [ ! -x "$release/line-offline" ]; then
+    printf 'An incomplete release already occupies %s.\n' "$release" >&2
+    exit 1
+  fi
+else
+  echo 'Preparing Wine and LINE...'
+  runner=soda-11.0-10-line.runtime.tar.gz
+  app=line-$version.payload.tar.gz
+  mkdir -p "$stage/release/payload"
+  (
+    cd "$stage/input"
+    sha256sum --quiet -c "$runner.sha256" "$app.sha256"
+    tar --no-same-owner -xzf "$runner" -C "$stage/release"
+    tar --no-same-owner -xzf "$app" -C "$stage/release/payload"
+  )
+  install -m 755 "$stage/input/line-offline" "$stage/release/line-offline"
+  install -m 644 "$stage/input/install-line.sh" "$stage/release/install-line.sh"
+  printf '%s\n' "$payload_sha256" > "$stage/release/bundle.sha256"
+  chmod -R go-w "$stage/release"
+fi
+
+echo 'Installing the local Debian runtime packages...'
+if ! sh "$stage/input/install-runtime-debs.sh" "$stage/input/runtime-debs" 9>&- > "$stage/dpkg.log" 2>&1; then
+  cat "$stage/dpkg.log" >&2
+  exit 1
+fi
+if [ -d "$stage/release" ]; then
+  mv -T -- "$stage/release" "$release"
+fi
+ln -sfnT -- "$release/line-offline" "$command_path"
+printf 'Installed LINE %s in %s\n' "$version" "$release"
+printf 'Launch as your desktop user with %s\n' "$command_path"
+exit 0
+__LINE_OFFLINE_PAYLOAD__

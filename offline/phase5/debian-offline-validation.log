@@ -1,0 +1,19 @@
+Clean Debian 13.8 Slim container, loopback-only networking, no display during installation.
+The embedded archive failed verification.
+Verifying the embedded archive...
+Preparing Wine and LINE...
+Installing the local Debian runtime packages...
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-bd0ce198f3b2
+Launch as your desktop user with /usr/local/bin/line-offline
+Verifying the embedded archive...
+Installing the local Debian runtime packages...
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-bd0ce198f3b2
+Launch as your desktop user with /usr/local/bin/line-offline
+The second installation reused the same release directory.
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DWrite.dll" at 00006FFFFB7F0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\users\\line-test\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native
+Confirmed the email field contains 🔮🔥🙏
+Colored pixels at email field offset 67: 91
+Colored pixels at email field offset 82: 77
+Colored pixels at email field offset 96: 70
+PASS: the standalone installer opened LINE and all three pasted emoji rendered in color.

@@ -1,0 +1,55 @@
+#!/bin/sh
+set -eu
+
+if [ "$(id -u)" -eq 0 ]; then
+  echo 'Start LINE as your desktop user.' >&2
+  exit 1
+fi
+if [ -z "${DISPLAY:-}" ]; then
+  echo 'Start LINE from a desktop session with X11 or XWayland.' >&2
+  exit 1
+fi
+
+release=$(dirname -- "$(readlink -f -- "$0")")
+bundle_sha256=$(cat "$release/bundle.sha256")
+data_directory=${XDG_DATA_HOME:-"$HOME/.local/share"}
+export PATH="$release/wine/bin:$PATH"
+export WINEARCH=win64 WINEDEBUG="${WINEDEBUG:--all}"
+export WINEDLLOVERRIDES="${WINEDLLOVERRIDES:+$WINEDLLOVERRIDES;}mscoree,mshtml="
+
+umask 077
+mkdir -p "$data_directory/line-offline/wine"
+WINEPREFIX=$(cd -- "$data_directory/line-offline/wine" && pwd -P)
+export WINEPREFIX
+
+# Serialize first launch and a pending update of the same prefix.
+exec 9>"$WINEPREFIX/.setup.lock"
+flock 9
+state=$WINEPREFIX/.line-offline-installed
+installed_sha256=
+launcher=
+if [ -f "$state" ]; then
+  {
+    IFS= read -r installed_sha256 &&
+    IFS= read -r launcher
+  } < "$state" || installed_sha256=
+fi
+
+if [ "$installed_sha256" != "$bundle_sha256" ] || [ ! -f "$launcher" ]; then
+  if [ -n "$installed_sha256" ] && ! timeout 15s wineserver -w 9>&-; then
+    echo 'Close LINE before applying this offline build to the prefix.' >&2
+    exit 1
+  fi
+  if [ ! -f "$WINEPREFIX/system.reg" ] || [ ! -d "$WINEPREFIX/drive_c/windows/syswow64" ]; then
+    wineboot -i 9>&-
+    wineserver -w 9>&-
+  fi
+  launcher=$(sh "$release/install-line.sh" "$release/payload" 9>&-)
+  printf '%s\n%s\n' "$bundle_sha256" "$launcher" > "$state.tmp"
+  mv -f -- "$state.tmp" "$state"
+fi
+
+flock -u 9
+exec 9>&-
+cd -- "$(dirname -- "$launcher")"
+exec wine "$launcher" "$@"
