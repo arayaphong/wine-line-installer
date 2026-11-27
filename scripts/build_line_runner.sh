@@ -12,7 +12,7 @@
 # is never modified.
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")/.." && pwd)
-RUNNERS=$HOME/.var/app/com.usebottles.bottles/data/bottles/runners
+RUNNERS=${LINE_RUNNERS_DIR:-$HOME/.var/app/com.usebottles.bottles/data/bottles/runners}
 BASE=$RUNNERS/soda-11.0-10
 NEW=$RUNNERS/soda-11.0-10-line
 OUT=$HERE/wine-src/out

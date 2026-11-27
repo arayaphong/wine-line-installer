@@ -1,6 +1,6 @@
 # LINE for Linux offline installer
 
-Build and install LINE Desktop 26.6.0.4004 on Debian 13 amd64 using a pinned Wine runner. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session and the installation includes Thai fonts and color emoji support.
+Build LINE Desktop 26.6.0.4004 by patching Wine from pinned upstream inputs and packaging a `.run` for Debian 13 amd64. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session and the installation includes Thai fonts and color emoji support.
 
 Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md) and its [rebuild guide](.agents/skills/line-offline-install/references/rebuild.md). Every step can be followed in a terminal or by an AI agent that reads Markdown and runs commands. The offline install and launch path uses standalone Wine. The optional file acquisition workflow uses Bottles to reproduce the original LINE installation.
 
@@ -16,10 +16,10 @@ Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md
 | Bundled launcher and updater | `LineLauncher.exe` x86, `1.0.0.23` and `LineUpdater.exe` x86, `1.0.1.93` |
 | Connector | `LineConnector.exe` x64, `1.0.0.1` and `LINE.msix` package identity `26.6.0.0` |
 | Wine engine and base runner | `wine-11.0` with Bottles Soda `soda-11.0-10` |
-| Packaged Wine runner | `soda-11.0-10-line.runtime.tar.gz` with project patches `0001` through `0004` |
+| Wine runtime generated during the build | `soda-11.0-10-line.runtime.tar.gz` with project patches `0001` through `0004` |
 | Valve Wine source | Commit `0509a0b64a4852741364c95bcdc67ae8f74ef11d` |
 
-The bootstrapper resolves the desktop installer at download time. Its SHA-256 is `5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462`. For a byte-identical build, match the installed LINE files against the payload manifest and use the exact Wine runner archive. [LINE payload manifest](offline/phase3/payload-files.sha256) · [Wine archive checksum](offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)
+The bootstrapper resolves the desktop installer at download time. Its SHA-256 is `5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462`. The private backup preserves the installed LINE program files by hash. [LINE payload manifest](offline/phase3/payload-files.sha256)
 
 The Wine DLL build fetches Valve's source tag `experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee`. The patch guide records the exact Soda release revision, patch order, and runner assembly commands. [Wine patch guide](patches/README.md)
 
@@ -75,24 +75,18 @@ The LINE payload includes 118 application DLLs. The manifest pins each file by i
 
 ## Build in a fresh checkout
 
-1. Restore the exact build inputs at the paths listed in the rebuild guide. These include the Wine runner, Debian packages, signed Microsoft DLLs and catalogs, fonts and LINE program files. The repository contains the source code, checksums and provenance. Supply the binary inputs from your own copies or the documented upstream sources. If the LINE bootstrapper now installs a different release, the pinned build needs a retained copy of the recorded version.
-   Check the runner and Microsoft DLLs from the project root before building.
+1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the private backup. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. Once the base release, source and build tools are available locally, the remaining build can run offline. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
+
+2. Run these commands from the project root. The first command verifies Soda, applies the Wine patches, compiles the DLLs and packages the runtime for the current build.
 
    ```bash
-   (cd offline/phase2 && sha256sum -c soda-11.0-10-line.runtime.tar.gz.sha256)
-   (cd ms-dlls/x86 && sha256sum -c SHA256SUMS)
-   (cd ms-dlls/x64-ondisk && sha256sum -c SHA256SUMS)
-   ```
-
-2. Run these commands from the project root with Python 3.11 or newer, Bash, GNU tar, gzip, `sha256sum` and `unzstd` if using the snapshot route.
-
-   ```bash
-   python3 offline/phase3/build-payload.py
+   bash offline/phase2/build-runtime.sh /path/to/soda-11.0-10-x86_64.tar.xz
+   python3 offline/phase3/build-payload.py --installed-line-dir /path/to/line/installed-program
    bash offline/phase5/build.sh
-   git diff --exit-code HEAD -- offline/phase5/LINE-offline-26.6.0.4004-linux-x86_64.run.sha256
+   (cd offline/phase5 && sha256sum -c LINE-offline-26.6.0.4004-linux-x86_64.run.sha256)
    ```
 
-   For a clean, matching LINE installation, use `python3 offline/phase3/build-payload.py --installed-line-dir /path/to/AppData/Local/LINE` in the first step. The payload builder checks the allowlisted program files against the recorded hashes. When building from a source archive, compare the final hash with the recorded installer checksum from before the build. [Recorded installer checksum](offline/phase5/LINE-offline-26.6.0.4004-linux-x86_64.run.sha256)
+   Use the checksums generated for the new runtime and `.run` together. The checked-in checksums record the previous tested build. Compiler output and packaging can change the checksum of a fresh build from pinned sources. Verify the newly built installer on clean Debian. [Rebuild and test procedure](.agents/skills/line-offline-install/references/rebuild.md)
 
 ## Install and verify
 
@@ -115,4 +109,4 @@ The clean Debian test covers offline installation, launch, colored emoji and a r
 - [Wine patches and their target revisions](patches/README.md) and [Bottles and Wine helper scripts](scripts/)
 - [Project progress](PROGRESS.md) and [technical notes](analysis/NOTES.md)
 
-Keep the `.run`, downloaded binaries, local Wine prefixes and account data outside Git. The optional `bash scripts/make_handoff_bundle.sh` exports the committed source files for use on a machine without GitHub access.
+Keep the `.run`, generated Wine files, downloaded binaries, local Wine prefixes and account data outside Git. The private backup holds inputs that may be hard to obtain again and files already extracted from Windows installation media. The optional `bash scripts/make_handoff_bundle.sh` exports the committed source files for use on a machine without GitHub access.

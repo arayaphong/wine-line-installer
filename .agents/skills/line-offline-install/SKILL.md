@@ -1,6 +1,6 @@
 ---
 name: line-offline-install
-description: Reproduce LINE 26.6.0.4004 on fresh Debian from pinned inputs through a successful interactive sign-in. Use to prepare or rebuild the offline installer, install it in a new Wine prefix, verify Thai and color emoji, and guide the user through LINE account confirmation.
+description: Reproduce LINE 26.6.0.4004 on fresh Debian. Use to build the patched Wine runtime from pinned upstream sources and create the offline installer, restore the archived LINE inputs, verify Thai and color emoji, and guide the user through LINE account confirmation.
 ---
 
 # ทำ LINE บน Linux ใหม่ตั้งแต่ต้นจนเข้าบัญชี
@@ -9,7 +9,9 @@ description: Reproduce LINE 26.6.0.4004 on fresh Debian from pinned inputs throu
 
 ## เตรียมวัตถุดิบและประกอบตัวติดตั้ง
 
-เปิดโฟลเดอร์โปรเจกต์ที่มี `offline/phase1/inventory.json` จากนั้นจัดเตรียม Debian image, Wine runner, แพ็กเกจ Debian, DLL และ catalog, ฟอนต์ และไฟล์โปรแกรม LINE รุ่นที่ตรึงไว้ โปรเจกต์เก็บโค้ดกับ checksum ให้จัดหาไฟล์จริงตามพาธในคู่มือ ใช้ snapshot ต้นทางที่ตรวจ hash แล้ว หรือใช้โฟลเดอร์ `AppData/Local/LINE` จากการลง LINE ใหม่ก่อนเข้าบัญชี สร้าง payload แล้วประกอบ `.run` จากไฟล์เหล่านั้น [ขั้นตอนสร้างใหม่](references/rebuild.md)
+เปิด checkout ที่มี `offline/phase1/inventory.json` คืนไฟล์โปรแกรม LINE, DLL และ catalog ที่สกัดไว้, ฟอนต์ และแพ็กเกจ Debian จาก archive ตามพาธในคู่มือ ดึง Soda ฐานกับซอร์ส Valve Wine ตามรุ่นที่ตรึงไว้ [ขั้นเตรียมไฟล์](references/rebuild.md)
+
+รัน `offline/phase2/build-runtime.sh` เพื่อ apply แพตช์ บิลด์ DLL และสร้าง Wine runner ในรอบเดียวกับการสร้างตัวติดตั้ง จากนั้นสร้าง payload ด้วย `offline/phase3/build-payload.py --installed-line-dir` โดยชี้ไปที่ `line/installed-program/` ใน archive ที่แตกแล้ว แล้วประกอบ `.run` ด้วย `offline/phase5/build.sh` ตรวจ checksum ของผลลัพธ์รอบนั้นและทวนผลบน Debian ใหม่ [ขั้นตอนสร้างและทดสอบ](references/rebuild.md) · [เหตุผลของแพตช์](../../../patches/README.md)
 
 ถ้ามี `.run` ที่สร้างไว้แล้ว ให้เทียบ SHA-256 กับไฟล์คู่กัน แล้วใช้ขั้นติดตั้งบนเครื่องเปล่าได้ทันที เมื่อโจทย์คือสร้างตัวติดตั้งขึ้นใหม่ ให้รันขั้น build จากวัตถุดิบก่อนเสมอ
 

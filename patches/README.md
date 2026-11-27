@@ -6,12 +6,14 @@ The binary base for the LINE runner is Bottles **Soda `soda-11.0-10`** for Linux
 
 ## Apply in this order
 
-| Patch | Change |
-|---|---|
-| [0001](0001-wintrust-catalog-v2-members.patch) | Add support for Windows catalog members used by LINE's trust checks |
-| [0002](0002-ntdll-SbSelectProcedure-stub.patch) | Add the `SbSelectProcedure` export at source level |
-| [0003](0003-secur32-endpoint-bindings-cng-hash.patch) | Support the TLS endpoint bindings needed by the online installer |
-| [0004](0004-dwrite-legacy-qt-color-glyph-run.patch) | Enable opt-in color glyph enumeration for LINE's Qt 6.6.3 |
+| Patch | What led to the change | What to verify |
+|---|---|---|
+| [0001](0001-wintrust-catalog-v2-members.patch) | Wine failed to read SHA-256 catalogs and `CAT_MEMBERINFO2` records. The patch supports the Windows catalog entries and checks decoding results. | LINE opens with the pinned signed DLL and catalog files. |
+| [0002](0002-ntdll-SbSelectProcedure-stub.patch) | Windows `dwmapi.dll` imported `SbSelectProcedure`, which was missing in Wine. A null result lets it use its default path. | The i386 Wine DLLs have the required exports and the 32-bit loader starts. |
+| [0003](0003-secur32-endpoint-bindings-cng-hash.patch) | The online bootstrapper hit WinHTTP error `12029` when the TLS certificate used an ECDSA SHA-384 signature. The patch maps the CNG hash name for endpoint bindings. | The bootstrapper can load its installer metadata over TLS when testing the online route. |
+| [0004](0004-dwrite-legacy-qt-color-glyph-run.patch) | Qt 6.6.3 requested a color glyph run before `MoveNext`. Wine reported `E_NOT_VALID_STATE`. The patch provides an opt-in for that call order. | `🔮🔥🙏` appear in color in the LINE email field with `fontengine=native`, `PrimeColorGlyphRun=1` and Segoe UI Emoji. |
+
+The research notes record the observed errors and the tests that led to these changes. [Wine installer investigations](../analysis/NOTES.md#fixing-wine-runs-819--installer-succeeds) · [Qt color emoji investigation](../analysis/NOTES.md#wine-compatibility-patch-for-qt-color-emoji-2026-11-26)
 
 For manual application, run the following from a clean Valve Wine checkout with `line_repo` set to the path of this project.
 
@@ -24,13 +26,12 @@ test "$(git rev-parse HEAD)" = 0509a0b64a4852741364c95bcdc67ae8f74ef11d &&
 
 ## Assemble `soda-11.0-10-line`
 
-Extract the base Soda release into `~/.var/app/com.usebottles.bottles/data/bottles/runners/` so its executable is at `soda-11.0-10/bin/wine` relative to that directory. Run these commands from the LINE installer repository root.
+Generate the runtime as part of each fresh installer build. Run this command from the LINE installer repository root with the pinned Soda tarball available locally.
 
 ```bash
-bash scripts/build_wine_dlls.sh
-bash scripts/build_line_runner.sh
+bash offline/phase2/build-runtime.sh /path/to/soda-11.0-10-x86_64.tar.xz
 ```
 
-The first script applies the patches and rebuilds `wintrust.dll` and `secur32.dll` for i386 and x86_64 and `dwrite.dll` for x86_64. The second adds the required exports to Soda's i386 `ntdll.dll`, `user32.dll`, and `dnsapi.dll` while assembling the separate LINE runner. This step supplies the runtime version of the `SbSelectProcedure` stub described in patch `0002`. [DLL build script](../scripts/build_wine_dlls.sh) · [Runner assembly script](../scripts/build_line_runner.sh)
+The runtime build verifies the base tarball, checks the Valve Wine revision and uses the existing DLL build and runner assembly scripts. `build_wine_dlls.sh` applies the patches and rebuilds `wintrust.dll` and `secur32.dll` for i386 and x86_64 and `dwrite.dll` for x86_64. `build_line_runner.sh` adds the required exports to Soda's i386 `ntdll.dll`, `user32.dll`, and `dnsapi.dll` while assembling the LINE runner in a temporary build directory. This step supplies the runtime version of the `SbSelectProcedure` stub described in patch `0002`. [Soda tarball checksum](../offline/phase2/soda-11.0-10-x86_64.tar.xz.sha256) · [DLL build script](../scripts/build_wine_dlls.sh) · [Runner assembly script](../scripts/build_line_runner.sh)
 
-Git stores the source patches, build scripts, and checksums. Compare a rebuilt runner with the recorded reference when reproducing the installer byte for byte. [Modified DLL checksums](../wine-src/out/SHA256SUMS) · [Tested runtime archive checksum](../offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)
+The build writes `offline/phase2/soda-11.0-10-line.runtime.tar.gz` and its matching SHA-256 for the `.run` build. Retain the source patches, revision pins, and verification results as the record of the work. The saved runtime checksum is the reference for the earlier tested build. [Modified DLL checksums](../wine-src/out/SHA256SUMS) · [Original tested runtime checksum](../offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)

@@ -2,22 +2,27 @@
 # Rebuild the patched Wine PE DLLs into wine-src/out/<arch>/ (wintrust, secur32 and x64 dwrite).
 # Only needed when wine-src/out/ is missing or the patches change.
 #
-# Needs: git, autoconf, flex, bison, python3, make, gcc, clang + lld-link (PE cross compiler).
+# Needs: git, autoconf, flex, bison, perl, python3, make, gcc, clang + lld-link.
 # Source: ValveSoftware/wine at the tag soda-11.0-10 is based on (see VALVE_WINE_TAG in
 #         bottlesdevs/wine .github/workflows/build-soda.yml, commit 75ceacbc for soda-11.0-10).
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")/.." && pwd)
 TAG=experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee
+REVISION=0509a0b64a4852741364c95bcdc67ae8f74ef11d
 SRC=$HERE/wine-src/valve-wine
 BUILD=$HERE/wine-src/build
 OUT=$HERE/wine-src/out
 JOBS=${JOBS:-$(nproc)}
 
-if [ ! -d "$SRC/.git" ]; then
+if [ ! -e "$SRC/.git" ]; then
   git clone --depth 1 --branch "$TAG" https://github.com/ValveSoftware/wine.git "$SRC"
 fi
 
 cd "$SRC"
+if [ "$(git rev-parse HEAD)" != "$REVISION" ]; then
+  printf 'Check out Valve Wine revision %s at %s before applying the LINE patches.\n' "$REVISION" "$SRC" >&2
+  exit 1
+fi
 for p in "$HERE"/patches/0001-*.patch "$HERE"/patches/0002-*.patch "$HERE"/patches/0003-*.patch "$HERE"/patches/0004-*.patch; do
   if git apply --reverse --check "$p" 2>/dev/null; then
     echo "already applied: $(basename "$p")"
