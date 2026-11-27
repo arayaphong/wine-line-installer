@@ -1,6 +1,6 @@
 # LINE for Linux offline installer
 
-Build LINE Desktop 26.6.0.4004 by patching Wine from pinned upstream inputs and packaging a `.run` for Debian 13 amd64. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session and the installation includes Thai fonts and color emoji support.
+Build LINE Desktop 26.6.0.4004 by patching Wine from pinned upstream inputs and packaging a `.run` for Debian 13 amd64. The installer was tested on Debian 13.8 Slim with `libc6:amd64` `2.41-12+deb13u5`. LINE uses an X11 or XWayland session. The installation includes the LINE media player, Thai fonts, color emoji support, and a fix for LINE's window shadows on GNOME XWayland.
 
 Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md) and its [rebuild guide](.agents/skills/line-offline-install/references/rebuild.md). Every step can be followed in a terminal or by an AI agent that reads Markdown and runs commands. The offline install and launch path uses standalone Wine. The optional file acquisition workflow uses Bottles to reproduce the original LINE installation.
 
@@ -12,16 +12,17 @@ Start with the [installation skill](.agents/skills/line-offline-install/SKILL.md
 |---|---|
 | Offline installer | `LINE-offline-26.6.0.4004-linux-x86_64.run` |
 | Installed LINE Desktop | `LINE.exe` x64, `26.6.0.4004` |
+| Media player | `LineMediaPlayer.exe` x64, `1.2.0.662` |
 | Official online bootstrapper | `LineInst.exe` x86, `1.0.0.24` |
 | Bundled launcher and updater | `LineLauncher.exe` x86, `1.0.0.23` and `LineUpdater.exe` x86, `1.0.1.93` |
 | Connector | `LineConnector.exe` x64, `1.0.0.1` and `LINE.msix` package identity `26.6.0.0` |
 | Wine engine and base runner | `wine-11.0` with Bottles Soda `soda-11.0-10` |
-| Wine runtime generated during the build | `soda-11.0-10-line.runtime.tar.gz` with project patches `0001` through `0004` |
+| Wine runtime generated during the build | `soda-11.0-10-line.runtime.tar.gz` with project patches `0001` through `0005` |
 | Valve Wine source | Commit `0509a0b64a4852741364c95bcdc67ae8f74ef11d` |
 
 The bootstrapper resolves the desktop installer at download time. Its SHA-256 is `5dbceadb14d130b76f8d16c3519f0e41ac0cbb5b4c6bdae302a850a7cf0a2462`. The private backup preserves the installed LINE program files by hash. [LINE payload manifest](offline/phase3/payload-files.sha256)
 
-The Wine DLL build fetches Valve's source tag `experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee`. The patch guide records the exact Soda release revision, patch order, and runner assembly commands. [Wine patch guide](patches/README.md)
+The Wine build fetches Valve's source tag `experimental-wine-bleeding-edge-11.0-428201-20260904-pdf1645-w0509a0-dd7ac25-v35bdee`. The patch guide records the exact Soda release revision, patch order, and runner assembly commands. [Wine patch guide](patches/README.md)
 
 ### Microsoft system DLLs and catalogs
 
@@ -46,17 +47,18 @@ The five matching catalogs are Windows 11 `10.0.26100.9457` packages `Client-Des
 
 For source recovery from `KB3140245`, the delta extraction used Microsoft `msdelta.dll` x64 with PE `FileVersion` `5.0.1.1` and SHA-256 `a5b38f57fe4b1130c275268709b0671530486cb67124ffa6821882243f840d57`. [Delta extraction notes](analysis/NOTES.md#fixing-wine-runs-819--installer-succeeds)
 
-### Modified Wine DLLs
+### Modified Wine libraries
 
-There are eight modified Wine DLL files in the runner. Use the per-file digest for version cells marked **SHA-256**. The runner archive and its manifest pin the remaining Wine libraries. [Modified DLL checksums](wine-src/out/SHA256SUMS) · [Full Wine runner manifest](offline/phase1/wine-runner-manifest.json)
+The runner replaces eight PE DLL files and the x86_64 Unix X11 driver. Use the per-file digest for version cells marked **SHA-256**. The base runner archive pins the remaining Wine libraries. [Modified library checksums](wine-src/out/SHA256SUMS) · [Soda archive checksum](offline/phase2/soda-11.0-10-x86_64.tar.xz.sha256)
 
-| DLL | x86 FileVersion | x64 FileVersion | Project change |
+| Library | x86 version | x64 version | Project change |
 |---|---|---|---|
 | `dnsapi.dll` | `5.2.3790.4318` | — | Added stub exports to Soda's DLL |
 | `dwrite.dll` | — | **SHA-256** | Rebuilt with patch `0004` for Qt color emoji |
 | `ntdll.dll` | `6.1.7601.24059` | — | Added stub exports to Soda's DLL. Patch `0002` records the source-level `SbSelectProcedure` change |
 | `secur32.dll` | **SHA-256** | **SHA-256** | Rebuilt with patch `0003` for TLS endpoint bindings |
 | `user32.dll` | `5.1.2600.2180` | — | Added stub exports to Soda's DLL |
+| `winex11.so` | — | **SHA-256** | Rebuilt with patch `0005` for window shadow stacking on Mutter XWayland |
 | `wintrust.dll` | `6.1.7601.23769` | `6.1.7601.23769` | Rebuilt with patch `0001` for Windows catalog support |
 
 ### DLLs bundled by LINE
@@ -73,22 +75,29 @@ The LINE payload includes 118 application DLLs. The manifest pins each file by i
 | `libcrypto-1_1-x64.dll` and `libssl-1_1-x64.dll` | 2 | x64 | OpenSSL `1.1.1n` from the embedded build string |
 | `skottie.dll` | 1 | x64 | SHA-256 in the manifest |
 
+The offline payload includes all 130 files from LINE's official media player ZIP. Playback uses Wine's Direct3D 11 backend with Mesa and WineGStreamer with the bundled H.264 and AAC components. The player requests native Direct3D resources from Qt, so use Qt's default Windows backend for playback. [Official plugin catalog](https://desktop.line-scdn.net/win/plugin/v1/plugin_remote_info.json) · [Media player file hashes](offline/phase3/media-player-files.sha256) · [Debian runtime packages](offline/phase2/runtime-debs/SHA256SUMS) · [Parser packages](offline/phase2/media-parser-debs/SHA256SUMS)
+
 ## Build in a fresh checkout
 
-To try the rebuild, extract `line-installer-downloads-26.6.0.4004.tar.zst` and follow its `README.md` to restore the inputs into the checkout. [Reference input archive on Google Drive](https://drive.google.com/file/d/1tgjea5ZodPtXFg-5IP_zKs2-cmJGHB3b/view?usp=sharing)
+To rebuild from the preserved inputs, extract `line-installer-downloads-26.6.0.4004.tar.zst` and follow its `README.md`. The archive includes the official player ZIP, the pinned Debian playback packages and the checksums for the tested installer. [Archive on Google Drive](https://drive.google.com/file/d/1tgjea5ZodPtXFg-5IP_zKs2-cmJGHB3b/view?usp=sharing)
 
-1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the input archive. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. Once the base release, source and build tools are available locally, the remaining build can run offline. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
+1. Restore the pinned LINE program files, extracted Microsoft DLLs and catalogs, fonts and Debian packages from the input archive. Use the media player ZIP in `line/media-player/` and restore both `debian/runtime-debs/` and `debian/media-parser-debs/`. Obtain the `soda-11.0-10-x86_64.tar.xz` base release. The Wine build script checks out the pinned Valve Wine revision if needed. The build runs offline once all inputs are available locally. [Input locations and prerequisites](.agents/skills/line-offline-install/references/rebuild.md#1-รวบรวมไฟล์ต้นทาง) · [Wine patch guide](patches/README.md)
 
-2. Run these commands from the project root. The first command verifies Soda, applies the Wine patches, compiles the DLLs and packages the runtime for the current build.
+2. Run these commands from the project root. The first command verifies Soda, applies the Wine patches, builds the patched DLLs and X11 driver, and packages the runtime for the current build.
 
    ```bash
    bash offline/phase2/build-runtime.sh /path/to/soda-11.0-10-x86_64.tar.xz
-   python3 offline/phase3/build-payload.py --installed-line-dir /path/to/line/installed-program
+   archive_dir=/path/to/line-installer-downloads-26.6.0.4004
+   python3 offline/phase3/build-payload.py \
+     --installed-line-dir "$archive_dir/line/installed-program" \
+     --media-player-zip "$archive_dir/line/media-player/LineMediaPlayer-1.2.0.662.zip"
    bash offline/phase5/build.sh
    (cd offline/phase5 && sha256sum -c LINE-offline-26.6.0.4004-linux-x86_64.run.sha256)
    ```
 
-   Use the checksums generated for the new runtime and `.run` together. The checked-in checksums record the previous tested build. Compiler output and packaging can change the checksum of a fresh build from pinned sources. Verify the newly built installer on clean Debian. [Rebuild and test procedure](.agents/skills/line-offline-install/references/rebuild.md)
+   Use the checksums generated for the new runtime and `.run` together. The checked-in checksums record the tested reference build. Compiler output and packaging can change the checksum of a fresh build from pinned sources. Verify the newly built installer on clean Debian. [Rebuild and test procedure](.agents/skills/line-offline-install/references/rebuild.md)
+
+In a clean checkout, the refreshed archive with the reference Wine runtime reproduced the payload and `.run` hashes recorded in the archive's `project-pins/` directory.
 
 ## Install and verify
 
@@ -100,9 +109,11 @@ sudo sh ./LINE-offline-26.6.0.4004-linux-x86_64.run
 line-offline
 ```
 
-The first launch creates a Wine prefix under `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine`. Check Thai text on the sign-in screen and paste `🔮🔥🙏` into the email field to verify all three appear in color. Clear the email field and connect to the internet to sign in. The account owner scans the QR code in LINE on their phone and confirms the sign-in. Verify that the chat list opens and the same desktop account can start LINE again.
+The first launch creates a Wine prefix under `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine` and puts the bundled media player in `%LOCALAPPDATA%\LINE\Data\plugin\LineMediaPlayer\1.2.0.662`. An existing prefix receives the player on its first launch with the updated `.run`. Check Thai text on the sign-in screen and paste `🔮🔥🙏` into the email field to verify all three appear in color. Clear the email field and connect to the internet to sign in. The account owner scans the QR code in LINE on their phone and confirms the sign-in. Verify that the chat list opens and the same desktop account can start LINE again.
 
-The clean Debian test covers offline installation, launch, colored emoji and a restart using the same prefix. The separate online test reached the QR screen. Completing sign-in requires the account owner's confirmation. [Offline test](offline/phase6/clean-debian-validation.log) · [Online readiness test](analysis/fresh-login-readiness-20261127.log)
+The clean Debian test covers offline installation, driver and decoder dependencies, Direct3D initialization in the bundled player, colored emoji, and provisioning an existing prefix. A separate test played a local H.264/AAC MP4 through to the end on Mutter XWayland and verified a stereo stream through the desktop's PulseAudio-compatible socket. The online test reached the QR screen. Completing sign-in requires the account owner's confirmation. [Offline and playback tests](offline/phase6/clean-debian-validation.log) · [Mutter XWayland shadow test](patches/0005-mutter-xwayland-validation.txt) · [Online readiness test](analysis/fresh-login-readiness-20261127.log)
+
+LINE maintains a separate plugin catalog. In a clean networked test the bundled player files were present at the sign-in screen, while LINE had yet to create its `plugin.bin` cache after 60 seconds. Playback from the signed-in chat interface still needs verification.
 
 ## Project references
 

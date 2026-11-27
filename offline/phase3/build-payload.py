@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import tarfile
 import tempfile
+from zipfile import ZipFile
 
 
 PHASE = Path(__file__).resolve().parent
@@ -115,7 +116,43 @@ def copy_installed_program(stage, line, installed_dir):
     return len(entries)
 
 
-def build(installed_line_dir=None):
+def extract_media_player(stage, media, media_player_zip):
+    archive = media["archive"]
+    source = media_player_zip or (PROJECT / archive["path"])
+    if not source.is_file():
+        raise FileNotFoundError(f"Missing official media player archive at {source}. Use --media-player-zip.")
+    if source.stat().st_size != archive["size_bytes"] or sha256(source) != archive["sha256"]:
+        raise ValueError("Media player archive checksum differs from the phase 1 inventory")
+    manifest = PROJECT / media["manifest"]
+    if sha256(manifest) != media["manifest_sha256"]:
+        raise ValueError("Media player manifest checksum differs from the phase 1 inventory")
+
+    destination = stage / "line-media-player" / media["version"]
+    seen = set()
+    total_bytes = 0
+    with ZipFile(source) as zipped:
+        for row in manifest.read_text().splitlines():
+            digest, _, name = row.partition("  ")
+            relative = PurePosixPath(name)
+            if not name or relative.is_absolute() or ".." in relative.parts or relative in seen:
+                raise ValueError(f"Unexpected media player manifest entry: {name}")
+            target = destination / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with zipped.open(name) as original, target.open("xb") as output:
+                shutil.copyfileobj(original, output)
+            if sha256(target) != digest:
+                raise ValueError(f"Media player file differs from the pinned version: {relative}")
+            total_bytes += target.stat().st_size
+            seen.add(relative)
+
+    if (len(seen), total_bytes) != (media["program_files"], media["program_bytes"]):
+        raise ValueError("Media player files differ from the phase 1 inventory")
+    if sha256(destination / "LineMediaPlayer.exe") != media["executable_sha256"]:
+        raise ValueError("Media player executable checksum differs from the phase 1 inventory")
+    return len(seen)
+
+
+def build(installed_line_dir=None, media_player_zip=None):
     inventory = json.loads((PHASE.parent / "phase1/inventory.json").read_text())
     line = inventory["line_payload"]
     archive_name = f"line-{line['version']}.payload.tar.gz"
@@ -129,6 +166,7 @@ def build(installed_line_dir=None):
             program_files = extract_program(stage, line)
         else:
             program_files = copy_installed_program(stage, line, installed_line_dir)
+        media_files = extract_media_player(stage, line["media_player"], media_player_zip)
         for entry in support_files:
             source = PROJECT / entry["path"]
             if source.stat().st_size != entry["size_bytes"] or sha256(source) != entry["sha256"]:
@@ -176,7 +214,8 @@ def build(installed_line_dir=None):
         archive.replace(PHASE / archive_name)
         archive_checksum.replace(PHASE / archive_checksum.name)
         index.replace(PHASE / "payload-files.sha256")
-    print(f"Packed {program_files} LINE files, {len(support_files)} Microsoft DLL/catalog files, and Thai and emoji fonts")
+    print(f"Packed {program_files} LINE files, {media_files} media player files, "
+          f"{len(support_files)} Microsoft DLL/catalog files, and Thai and emoji fonts")
 
 
 if __name__ == "__main__":
@@ -185,4 +224,9 @@ if __name__ == "__main__":
         "--installed-line-dir", type=Path,
         help="AppData/Local/LINE directory from a clean installation of the pinned LINE version",
     )
-    build(parser.parse_args().installed_line_dir)
+    parser.add_argument(
+        "--media-player-zip", type=Path,
+        help="Official ZIP for the pinned LineMediaPlayer version, if stored outside baseline/inputs",
+    )
+    args = parser.parse_args()
+    build(args.installed_line_dir, args.media_player_zip)

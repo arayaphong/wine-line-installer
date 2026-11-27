@@ -1,0 +1,146 @@
+Date: 2026-11-27 (Asia/Bangkok)
+Target: LINE 26.6.0.4004, Debian 13.8 Slim amd64, glibc 2.41
+Desktop: GNOME Shell (Mutter) through XWayland
+Wine source: ValveSoftware/wine at 0509a0b64a4852741364c95bcdc67ae8f74ef11d
+
+Baseline and candidate were tested side by side under Soda 11.0-10 with
+the installed LINE runner. The candidate used a fresh prefix and a separate
+runner copy with only its x86_64 Unix winex11.so replaced. The driver was
+linked against the pinned ntdll.so and win32u.so, required glibc 2.38 or
+earlier symbol versions, and passed ldd -r in the Debian container.
+
+SHA-256 LINE.exe in both prefixes:
+ce2f4b88857db34bfe4c5d9628daa814a42a75cf41540330d21b6ae5e5548447
+SHA-256 installed stock winex11.so:
+8e52ca306af5b2a7de6567dd5258b8c9a1890565d5a4f30f80e9ecdf1351c4ff
+SHA-256 test build of winex11.so:
+8dc1e4cfcff18dd29ae1d184334e5b22148b7f0ad380b0f0bafd6023da649a0d
+
+The candidate reached the sign-in window. All eight shadow X windows
+were mapped, had override_redirect=False and WM_TRANSIENT_FOR set to
+the LINE main window, and lacked _NET_WM_STATE_ABOVE. All eight Win32
+shadows still had exstyle 0x800a8 including WS_EX_TOPMOST.
+
+Mean brightness of a screen strip inside a shadow, with 1 being white.
+Each strip measured 11 by 110 pixels over a white Evince page.
+Stock, Evince covering LINE:                    0.961497 (shadow visible)
+Candidate, LINE focused above Evince:           0.804278 (shadow visible)
+Candidate, Evince covering LINE:                1.000000 (shadow covered)
+Candidate, LINE minimized:                      1.000000 (shadow covered)
+Candidate, LINE restored and focused:            0.804278 (shadow visible)
+Candidate, Evince covering LINE again:          1.000000 (shadow covered)
+
+Scope: sign-in window and focus/minimize/restore on the stated desktop.
+
+Media viewer follow-up
+
+On Bottle LINE-repro in the GNOME Flatpak, the real media viewer had
+eight mapped 11-pixel X11 window segments with override_redirect=True
+while Evince covered the owner. The X11 PID mapped to LineMediaPlayer.exe
+1.2.0.662. The process had loaded the first test build of winex11.so,
+whose basename filter covered only LINE.exe. A Win32 enumeration of the
+viewer confirmed shadow_side_... and shadow_corner_... classes, style
+0xd4000000 and exstyle 0x80088. The windows had the viewer as owner.
+
+The second driver adds linemediaplayer.exe to the same basename filter.
+SHA-256 of updated x86_64 Unix winex11.so:
+0feb2531f8943a4a4f13f35abf69bf6872fc924c7f0a716cd8d2c9d34a451f9d
+
+A standalone probe named LineMediaPlayer.exe, with the observed window
+class names and styles, created two 11-pixel alpha-blended side windows.
+Both runs kept Win32 exstyle 0x80088. The first driver left the strips
+unmanaged and visible over Evince (covered pixel mean 0.858824). The
+second driver set override_redirect=False and preserved WM_TRANSIENT_FOR.
+Its equivalent covered strip matched the minimized baseline at 1.000000.
+The strip was visible with the probe focused. X11 reported a full
+11-by-416 input region for its left edge. An automated mouse drag did
+not produce a resize result, so the probe verifies stacking and the X11
+input region. Actual media-viewer dragging remained to be checked at
+installation time.
+
+The updated driver passed relocation checks in Debian and the Bottles
+Flatpak. It was installed into the separate LINE-repro runner. Existing
+viewer processes retain the first driver mapping until restarted.
+
+Class matching without an executable-name filter
+
+SHA-256 of winex11.so with the executable-name filter removed:
+7bd1db0c59328ee661ef172ff83cef2a3adc91744601b195cb24e26d2378f94f
+
+The same FrameClassProbe.exe was run on both driver builds. The two
+visible sides had the same Win32 style 0xd4000000, exstyle 0x80088 and
+owner. The left side used shadow_side_55890352_3 and the right side used
+probe_side_55890352_1. The earlier driver left both override-redirect
+flags set. The updated driver cleared the flag on the left side alone.
+It retained the left side's WM_TRANSIENT_FOR and omitted its X11 ABOVE
+state while preserving the Win32 TOPMOST bit. The rebuilt driver passed
+relocation checks in Debian and the Bottles Flatpak and was installed
+in the separate LINE-repro runner.
+
+Offline installer build
+
+Built the runtime with patches 0001–0005 using the pinned Soda archive
+and Valve Wine revision. The x86_64 Unix winex11.so build used GCC 16.2.1
+and GNU ld 2.47 with X11 and OpenGL enabled. It linked against Soda's
+ntdll.so and win32u.so and requires GLIBC_2.38 or earlier symbols.
+The separate LINE payload matched the 184 checked-in file hashes.
+
+SHA-256 of the packaged x86_64 Unix winex11.so:
+e06e225d143d016459a8694317a7a96fa6f31f8203367ae904d0806ad9c65612
+SHA-256 of the offline .run:
+2d661b17e6fcd691ff4ff29f3536351fea43d5f34f9210c16c4c236faf06530a
+
+The clean Debian 13.8 Slim offline test verified the installed driver
+checksum and resolved all its relocations. See the complete result in
+offline/phase6/clean-debian-validation.log.
+
+On Mutter XWayland, LINE from the first packaged build retained the
+original Win32 shadow style (0xdc000000) and extended style (0x800a8).
+All eight shadows were mapped with override_redirect=False, had the
+main LINE window as WM_TRANSIENT_FOR and lacked _NET_WM_STATE_ABOVE.
+An 11-by-110-pixel strip over a blank GTK window measured mean brightness
+0.809626 with LINE restored and focused. The strip measured 1.000000
+with GTK covering LINE and with LINE minimized. The final build mapped
+the temporary build directory out of the debug records. The two ELF
+files compared byte for byte after removing debug data and the GNU build ID.
+
+The separate FrameClassProbe.exe retained style 0xd4000000 and extended
+style 0x80088 on both edges. Mutter managed shadow_side_55890352_3 with
+the correct owner and no ABOVE state. It left probe_side_55890352_1
+unmanaged. Covered strip brightness was 1.000000 for the matching edge
+and 0.858824 for the control. This probe checks stacking for a media-style
+border in another process.
+
+The final .run was then installed into the same throwaway Debian session.
+LINE restarted with its existing Wine prefix and mapped the winex11.so
+with the final checksum above. All eight shadows were still managed,
+transient for their owner and clear of the X11 ABOVE state.
+
+Real LineMediaPlayer.exe on the installed runtime
+
+Ran the original LineMediaPlayer.exe 1.2.0.662 as a separate test input
+in the Debian 13.8 Slim installation from the .run above, which predates
+media player bundling. Started the executable
+with standalone=1 and QT_QUICK_BACKEND=software, using the installed
+Wine runner and its existing test prefix without an account session.
+The process mapped the final winex11.so with SHA-256:
+e06e225d143d016459a8694317a7a96fa6f31f8203367ae904d0806ad9c65612
+SHA-256 of the original LineMediaPlayer.exe:
+fd96ef1cecd9188cf1c5aaf2fea055e5a89f348c90c080522435c379bfe3086f
+
+All eight 11-pixel edges and corners were mapped with override_redirect=False,
+WM_TRANSIENT_FOR set to the viewer and no _NET_WM_STATE_ABOVE. A 100-pixel
+drag on the right outer edge resized the viewer from 1081x712 to 1181x712.
+A 100x75-pixel drag on the bottom-right corner resized it to 1281x787.
+The eight border windows followed the new dimensions and retained their
+owner and stacking properties.
+
+Measured after both drags, on a white native GTK background (1 = white):
+
+  Viewer focused:                 left 0.804278, right 0.804278, top 0.847415
+  GTK window covering the viewer: left 1.000000, right 1.000000, top 1.000000
+  Viewer brought to the front:    left 0.804278, right 0.804278, top 0.847415
+
+Standalone opens an empty viewer and ignores a positional clip path.
+This run covers real viewer stacking and resizing without signing into
+LINE. Video decoding and playback were outside this run.

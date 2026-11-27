@@ -5,6 +5,7 @@
 #       patches/0001-wintrust-catalog-v2-members.patch, patches/0003-secur32-endpoint-bindings-cng-hash.patch
 #       -> wine-src/out/<arch>/{wintrust,secur32}.dll
 #   dwrite.dll (x86_64): opt-in compatibility for Qt 6.6's color glyph enumeration (patches/0004)
+#   winex11.so (x86_64 Unix, when requested by build-runtime.sh): patched XWayland shadow stacking (patches/0005)
 #   ntdll.dll / user32.dll / dnsapi.dll (i386): soda's own DLLs + stub exports added by add_pe_export_stub.py
 #       (source-level equivalent for SbSelectProcedure: patches/0002-ntdll-SbSelectProcedure-stub.patch)
 #
@@ -17,9 +18,16 @@ BASE=$RUNNERS/soda-11.0-10
 NEW=$RUNNERS/soda-11.0-10-line
 OUT=$HERE/wine-src/out
 [ -d "$BASE" ] || { echo "base runner missing: $BASE" >&2; exit 1; }
-rebuilt_dlls=(i386-windows/wintrust.dll x86_64-windows/wintrust.dll
-              i386-windows/secur32.dll x86_64-windows/secur32.dll x86_64-windows/dwrite.dll)
-for f in "${rebuilt_dlls[@]}"; do
+rebuilt_files=(i386-windows/wintrust.dll x86_64-windows/wintrust.dll
+               i386-windows/secur32.dll x86_64-windows/secur32.dll x86_64-windows/dwrite.dll)
+if [ "${LINE_WITH_WINEX11:-0}" = 1 ]; then
+  [ -f "$OUT/x86_64-unix/winex11.so" ] || {
+    echo "missing $OUT/x86_64-unix/winex11.so (run offline/phase2/build-runtime.sh)" >&2
+    exit 1
+  }
+  rebuilt_files+=(x86_64-unix/winex11.so)
+fi
+for f in "${rebuilt_files[@]}"; do
   [ -f "$OUT/$f" ] || { echo "missing $OUT/$f (run scripts/build_wine_dlls.sh first)" >&2; exit 1; }
 done
 
@@ -55,10 +63,11 @@ python3 -I "$HERE/scripts/add_pe_export_stub.py" "$BASE/lib/wine/i386-windows/dn
 if [ ! -d "$NEW" ]; then
   cp -al "$BASE" "$NEW"
 fi
-for f in i386-windows/ntdll.dll i386-windows/user32.dll i386-windows/dnsapi.dll \
-         "${rebuilt_dlls[@]}"; do
+runner_overrides=(i386-windows/ntdll.dll i386-windows/user32.dll i386-windows/dnsapi.dll
+                  "${rebuilt_files[@]}")
+for f in "${runner_overrides[@]}"; do
   rm -f "${NEW:?}/lib/wine/${f:?}"
   cp "$OUT/$f" "$NEW/lib/wine/$f"
 done
-(cd "$OUT" && sha256sum */*.dll > SHA256SUMS)
+(cd "$OUT" && printf '%s\n' "${runner_overrides[@]}" | LC_ALL=C sort | xargs sha256sum > SHA256SUMS)
 echo "runner ready: $NEW"

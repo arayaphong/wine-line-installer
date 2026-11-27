@@ -16,6 +16,10 @@ data_directory=${XDG_DATA_HOME:-"$HOME/.local/share"}
 export PATH="$release/wine/bin:$PATH"
 export WINEARCH=win64 WINEDEBUG="${WINEDEBUG:--all}"
 export WINEDLLOVERRIDES="${WINEDLLOVERRIDES:+$WINEDLLOVERRIDES;}mscoree,mshtml="
+media_codecs=$release/media-codecs
+plugin_path=${GST_PLUGIN_PATH_1_0:-${GST_PLUGIN_PATH:-}}
+export GST_PLUGIN_PATH_1_0="$media_codecs/plugins${plugin_path:+:$plugin_path}"
+export LD_LIBRARY_PATH="$media_codecs/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 umask 077
 mkdir -p "$data_directory/line-offline/wine"

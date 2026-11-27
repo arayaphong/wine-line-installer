@@ -12,6 +12,7 @@ The binary base for the LINE runner is Bottles **Soda `soda-11.0-10`** for Linux
 | [0002](0002-ntdll-SbSelectProcedure-stub.patch) | Windows `dwmapi.dll` imported `SbSelectProcedure`, which was missing in Wine. A null result lets it use its default path. | The i386 Wine DLLs have the required exports and the 32-bit loader starts. |
 | [0003](0003-secur32-endpoint-bindings-cng-hash.patch) | The online bootstrapper hit WinHTTP error `12029` when the TLS certificate used an ECDSA SHA-384 signature. The patch maps the CNG hash name for endpoint bindings. | The bootstrapper can load its installer metadata over TLS when testing the online route. |
 | [0004](0004-dwrite-legacy-qt-color-glyph-run.patch) | Qt 6.6.3 requested a color glyph run before `MoveNext`. Wine reported `E_NOT_VALID_STATE`. The patch provides an opt-in for that call order. | `🔮🔥🙏` appear in color in the LINE email field with `fontengine=native`, `PrimeColorGlyphRun=1` and Segoe UI Emoji. |
+| [0005](0005-winex11-line-shadow-stacking.patch) | Wine handed LINE's shadow windows to XWayland as unmanaged windows, so they stayed visible over other GNOME windows. | On Mutter XWayland, the shadows follow their owner and disappear behind a covering app. |
 
 The research notes record the observed errors and the tests that led to these changes. [Wine installer investigations](../analysis/NOTES.md#fixing-wine-runs-819--installer-succeeds) · [Qt color emoji investigation](../analysis/NOTES.md#wine-compatibility-patch-for-qt-color-emoji-2026-11-26)
 
@@ -20,8 +21,8 @@ For manual application, run the following from a clean Valve Wine checkout with 
 ```bash
 line_repo=/path/to/wine-line-installer
 test "$(git rev-parse HEAD)" = 0509a0b64a4852741364c95bcdc67ae8f74ef11d &&
-  git apply --check "$line_repo"/patches/000[1-4]-*.patch &&
-  git apply "$line_repo"/patches/000[1-4]-*.patch
+  git apply --check "$line_repo"/patches/000[1-5]-*.patch &&
+  git apply "$line_repo"/patches/000[1-5]-*.patch
 ```
 
 ## Assemble `soda-11.0-10-line`
@@ -32,6 +33,12 @@ Generate the runtime as part of each fresh installer build. Run this command fro
 bash offline/phase2/build-runtime.sh /path/to/soda-11.0-10-x86_64.tar.xz
 ```
 
-The runtime build verifies the base tarball, checks the Valve Wine revision and uses the existing DLL build and runner assembly scripts. `build_wine_dlls.sh` applies the patches and rebuilds `wintrust.dll` and `secur32.dll` for i386 and x86_64 and `dwrite.dll` for x86_64. `build_line_runner.sh` adds the required exports to Soda's i386 `ntdll.dll`, `user32.dll`, and `dnsapi.dll` while assembling the LINE runner in a temporary build directory. This step supplies the runtime version of the `SbSelectProcedure` stub described in patch `0002`. [Soda tarball checksum](../offline/phase2/soda-11.0-10-x86_64.tar.xz.sha256) · [DLL build script](../scripts/build_wine_dlls.sh) · [Runner assembly script](../scripts/build_line_runner.sh)
+The runtime build verifies the base tarball and checks the Valve Wine revision. `build_wine_dlls.sh` applies the patches and rebuilds `wintrust.dll` and `secur32.dll` for i386 and x86_64 and `dwrite.dll` for x86_64. `build_wine_x11_driver.sh` builds `lib/wine/x86_64-unix/winex11.so` against the pinned Soda `ntdll.so` and `win32u.so`. `build_line_runner.sh` assembles the separate LINE runner and adds required exports to Soda's i386 `ntdll.dll`, `user32.dll`, and `dnsapi.dll`, including the runtime stub from patch `0002`. [Soda tarball checksum](../offline/phase2/soda-11.0-10-x86_64.tar.xz.sha256) · [DLL build script](../scripts/build_wine_dlls.sh) · [X11 driver build script](../scripts/build_wine_x11_driver.sh) · [Runner assembly script](../scripts/build_line_runner.sh)
 
-The build writes `offline/phase2/soda-11.0-10-line.runtime.tar.gz` and its matching SHA-256 for the `.run` build. Retain the source patches, revision pins, and verification results as the record of the work. The saved runtime checksum is the reference for the earlier tested build. [Modified DLL checksums](../wine-src/out/SHA256SUMS) · [Original tested runtime checksum](../offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)
+The build writes `offline/phase2/soda-11.0-10-line.runtime.tar.gz` and its matching SHA-256 for the `.run` build. Retain the source patches, revision pins, and verification results as the record of the work. [Modified library checksums](../wine-src/out/SHA256SUMS) · [Tested runtime checksum](../offline/phase2/soda-11.0-10-line.runtime.tar.gz.sha256)
+
+## Tested XWayland shadow fix
+
+[Patch 0005](0005-winex11-line-shadow-stacking.patch) lets Mutter stack LINE's eight shadow windows with their owner on XWayland. Wine still reports the original Win32 styles to LINE. The X11 driver declares the shadow windows as managed and leaves their stacking to Mutter without publishing `_NET_WM_STATE_ABOVE` for them. It matches windows with the `WS_POPUP` style and `WS_EX_TOOLWINDOW` extended style whose class names take the form `shadow_side_<digits>_[0-3]` or `shadow_corner_<digits>_[0-3]`. The dedicated runner uses those classes to recognize LINE's main window shadows and media resize borders regardless of executable name.
+
+The clean Debian installer test checks the packaged driver's digest and linkage. The Mutter XWayland test checks stacking separately because bare Xvfb has no window manager. [Offline test](../offline/phase6/clean-debian-validation.log) · [Mutter test results](0005-mutter-xwayland-validation.txt)

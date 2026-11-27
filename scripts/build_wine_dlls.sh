@@ -23,7 +23,7 @@ if [ "$(git rev-parse HEAD)" != "$REVISION" ]; then
   printf 'Check out Valve Wine revision %s at %s before applying the LINE patches.\n' "$REVISION" "$SRC" >&2
   exit 1
 fi
-for p in "$HERE"/patches/0001-*.patch "$HERE"/patches/0002-*.patch "$HERE"/patches/0003-*.patch "$HERE"/patches/0004-*.patch; do
+for p in "$HERE"/patches/000[1-5]-*.patch; do
   if git apply --reverse --check "$p" 2>/dev/null; then
     echo "already applied: $(basename "$p")"
   else

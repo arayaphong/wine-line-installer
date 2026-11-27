@@ -9,7 +9,7 @@ description: Reproduce LINE 26.6.0.4004 on fresh Debian. Use to build the patche
 
 ## เตรียมวัตถุดิบและประกอบตัวติดตั้ง
 
-เปิด checkout ที่มี `offline/phase1/inventory.json` คืนไฟล์โปรแกรม LINE, DLL และ catalog ที่สกัดไว้, ฟอนต์ และแพ็กเกจ Debian จาก archive ตามพาธในคู่มือ ดึง Soda ฐานกับซอร์ส Valve Wine ตามรุ่นที่ตรึงไว้ [ขั้นเตรียมไฟล์](references/rebuild.md)
+เปิด checkout ที่มี `offline/phase1/inventory.json` คืนไฟล์โปรแกรม LINE, ZIP ตัวเล่นสื่อทางการ, DLL และ catalog ที่สกัดไว้, ฟอนต์ และแพ็กเกจ Debian จาก archive ตามพาธในคู่มือ เตรียม Soda ฐานและซอร์ส Valve Wine ตามรุ่นที่ตรึงไว้ [ขั้นเตรียมไฟล์](references/rebuild.md)
 
 รัน `offline/phase2/build-runtime.sh` เพื่อ apply แพตช์ บิลด์ DLL และสร้าง Wine runner ในรอบเดียวกับการสร้างตัวติดตั้ง จากนั้นสร้าง payload ด้วย `offline/phase3/build-payload.py --installed-line-dir` โดยชี้ไปที่ `line/installed-program/` ใน archive ที่แตกแล้ว แล้วประกอบ `.run` ด้วย `offline/phase5/build.sh` ตรวจ checksum ของผลลัพธ์รอบนั้นและทวนผลบน Debian ใหม่ [ขั้นตอนสร้างและทดสอบ](references/rebuild.md) · [เหตุผลของแพตช์](../../../patches/README.md)
 
@@ -18,7 +18,7 @@ description: Reproduce LINE 26.6.0.4004 on fresh Debian. Use to build the patche
 ## ติดตั้งบน Debian ใหม่
 
 1. ตรวจ `dpkg --print-architecture` และ `dpkg-query -W libc6:amd64` ให้ตรงกับชุดแพ็กเกจ ติดตั้งจาก `.run` ที่ตรวจ checksum แล้ว ใช้ `sudo sh` ตามด้วยพาธไฟล์ ถ้า Terminal เป็น root อยู่แล้วให้ใช้ `sh` ตามด้วยพาธเดียวกัน
-2. เปิด `line-offline` จาก desktop ด้วยผู้ใช้ปกติ การเปิดครั้งแรกสร้าง Wine prefix ที่ `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine` แล้วลง LINE, DLL overrides, catalog, ฟอนต์ไทยและ Segoe UI Emoji ใน prefix นั้น เปิดครั้งต่อไปด้วยบัญชีและตำแหน่งเดิม
+2. เปิด `line-offline` จาก desktop ด้วยผู้ใช้ปกติ การเปิดครั้งแรกสร้าง Wine prefix ที่ `${XDG_DATA_HOME:-$HOME/.local/share}/line-offline/wine` แล้วลง LINE พร้อมตัวเล่นสื่อ, DLL overrides, catalog, ฟอนต์ไทยและ Segoe UI Emoji ใน prefix นั้น เปิดครั้งต่อไปด้วยบัญชีและตำแหน่งเดิม
 3. ตรวจว่าหน้าเข้าสู่ระบบอ่านภาษาไทยได้ วาง `🔮🔥🙏` ในช่องอีเมลแล้วดูว่าทั้งสามตัวเป็นสี จากนั้นล้างช่องนั้นก่อนเข้าบัญชี ถ้าต้องยืนยันตัวติดตั้งออฟไลน์จาก Debian เปล่า ให้รันตัวทดสอบตาม [ขั้นตอนสร้างใหม่](references/rebuild.md)
 
 ## เข้าสู่ระบบจริงและตรวจผล

@@ -88,6 +88,20 @@ else
     tar --no-same-owner -xzf "$runner" -C "$stage/release"
     tar --no-same-owner -xzf "$app" -C "$stage/release/payload"
   )
+  # Keep only the H.264 and AAC parser components from the pinned Debian packages.
+  (
+    cd "$stage/input/media-parser-debs"
+    sha256sum --quiet -c SHA256SUMS
+    for package in ./*.deb; do
+      dpkg-deb -x "$package" "$stage/parser-root"
+    done
+  )
+  parser_lib=$stage/parser-root/usr/lib/x86_64-linux-gnu
+  codecs=$stage/release/media-codecs
+  install -d "$codecs/lib" "$codecs/plugins"
+  cp -a "$parser_lib"/libgstcodecparsers-1.0.so.* "$codecs/lib/"
+  install -m 644 "$parser_lib/gstreamer-1.0/libgstvideoparsersbad.so" \
+    "$parser_lib/gstreamer-1.0/libgstaudioparsers.so" "$codecs/plugins/"
   install -m 755 "$stage/input/line-offline" "$stage/release/line-offline"
   install -m 644 "$stage/input/install-line.sh" "$stage/release/install-line.sh"
   printf '%s\n' "$payload_sha256" > "$stage/release/bundle.sha256"

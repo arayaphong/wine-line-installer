@@ -5,23 +5,52 @@ The embedded archive failed verification.
 Verifying the embedded archive...
 Preparing Wine and LINE...
 Installing the local Debian runtime packages...
-Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-bd0ce198f3b2
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-fbc7e89e1cb4
 Launch as your desktop user with /usr/local/bin/line-offline
+/opt/line-offline/26.6.0.4004-fbc7e89e1cb4/wine/lib/wine/x86_64-unix/winex11.so: OK
+The packaged X11 driver resolves all relocations on clean Debian.
+The bundled WineGStreamer and H.264/AAC parser libraries resolve on clean Debian.
+Verified all pinned media player files in the system installation.
 Verifying the embedded archive...
 Installing the local Debian runtime packages...
-Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-bd0ce198f3b2
+Installed LINE 26.6.0.4004 in /opt/line-offline/26.6.0.4004-fbc7e89e1cb4
 Launch as your desktop user with /usr/local/bin/line-offline
 The second installation reused the same release directory.
 Added the display and input fixtures after installation.
-0134:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DWrite.dll" at 00006FFFFB7F0000: builtin
-0134:trace:loaddll:build_module Loaded L"C:\\users\\line-test\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native
+First launch installed the pinned media player into the new Wine prefix.
+0130:trace:loaddll:build_module Loaded L"C:\\windows\\system32\\DWrite.dll" at 00006FFFFB7F0000: builtin
+0130:trace:loaddll:build_module Loaded L"C:\\users\\line-test\\AppData\\Local\\LINE\\bin\\26.6.0.4004\\platforms\\qwindows.dll" at 00006FFFFA4A0000: native
 first launch: confirmed the email field contains 🔮🔥🙏
 Reopened LINE using its existing Wine prefix and profile files.
 restart launch: confirmed the email field contains 🔮🔥🙏
+Updated an existing Wine prefix with the media player and preserved its profile and other plugin directory.
+The bundled LineMediaPlayer.exe opened and initialized Direct3D 11 with networking disabled.
 first launch, colored pixels at email field offset 67: 91
 first launch, colored pixels at email field offset 82: 77
 first launch, colored pixels at email field offset 96: 70
 restart launch, colored pixels at email field offset 67: 91
 restart launch, colored pixels at email field offset 82: 77
 restart launch, colored pixels at email field offset 96: 70
-PASS: single-file offline installation, prefix reuse, and three colored emoji before and after restart.
+PASS: single-file offline installation, bundled media player launch, prefix reuse and migration, and three colored emoji.
+
+Separate playback validation, Debian 13.8 Slim, GNOME Mutter XWayland
+Installer SHA-256: 576a561c1795004aa7a8493dec033b6fc2f3f8b51652f692d732056de2bf44ac
+Installed into an empty network-disabled Debian container from the .run.
+No extra Debian packages were copied into this playback container.
+Opened the bundled LineMediaPlayer.exe 1.2.0.662 in standalone mode
+and dropped a local 540x960 H.264/AAC MP4. No account session was used.
+Qt used its default Direct3D 11 backend with Mesa software rendering.
+The player initialized the H.264 video and AAC stereo 48 kHz transforms,
+entered playback, rendered changing video frames, and reached end of file.
+The player reported no access violation in this run.
+
+For the audio check the desktop PulseAudio socket was forwarded into
+the disposable container. The host showed an unmuted, uncorked,
+two-channel 48 kHz sink input owned by this exact player process.
+The native codec and graphics packages required for playback were
+installed by the .run. The host sound server was supplied by the desktop.
+
+The earlier experiment that forced Qt Quick to OpenGL failed in
+VideoRenderItem while obtaining a Direct3D 11 texture device, after
+the decoders started. The corrected run used Qt's normal Windows
+Direct3D backend. LINE and Wine binary inputs were preserved.

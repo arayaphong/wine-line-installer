@@ -11,18 +11,26 @@ filename=LINE-offline-$version-linux-x86_64.run
 
 (cd "$offline/phase2" && sha256sum --quiet -c "$runner.sha256")
 (cd "$offline/phase3" && sha256sum --quiet -c "$app.sha256")
-(
-  cd "$offline/phase2/runtime-debs"
-  sha256sum --quiet -c SHA256SUMS
-  diff -u <(cut -c67- SHA256SUMS) <(printf '%s\n' *.deb)
-)
+if ! tar -xOzf "$offline/phase3/$app" SHA256SUMS |
+    awk -v root='line-media-player/1.2.0.662/' 'index($2, root) == 1 { print $1 "  " substr($2, length(root) + 1) }' |
+    cmp -s "$offline/phase3/media-player-files.sha256" -; then
+  echo 'Rebuild the LINE payload with the pinned media player before packaging the .run.' >&2
+  exit 1
+fi
+for packages in runtime-debs media-parser-debs; do
+  (
+    cd "$offline/phase2/$packages"
+    sha256sum --quiet -c SHA256SUMS
+    diff -u <(cut -c67- SHA256SUMS) <(printf '%s\n' *.deb)
+  )
+done
 
 work=$(mktemp -d "$phase5/.build.XXXXXXXX")
 trap 'rm -r -- "$work"' EXIT
 
 tar --format=gnu --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \
   --mode='u=rwX,go=rX' -cf "$work/payload.tar" \
-  -C "$offline/phase2" "$runner" "$runner.sha256" runtime-debs install-runtime-debs.sh \
+  -C "$offline/phase2" "$runner" "$runner.sha256" runtime-debs media-parser-debs install-runtime-debs.sh \
   -C "$offline/phase3" "$app" "$app.sha256" install-line.sh \
   -C "$phase5" line-offline
 

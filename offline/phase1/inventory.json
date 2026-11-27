@@ -54,6 +54,25 @@
       "size_bytes": 31071680,
       "sha256": "ce2f4b88857db34bfe4c5d9628daa814a42a75cf41540330d21b6ae5e5548447"
     },
+    "media_player": {
+      "version": "1.2.0.662",
+      "architecture": "x86_64",
+      "install_path": "Data/plugin/LineMediaPlayer/1.2.0.662",
+      "archive": {
+        "path": "baseline/inputs/LineMediaPlayer-1.2.0.662.zip",
+        "url": "https://desktop.line-scdn.net/win/plugin/v1/LineMediaPlayer/1.2.0.662/LineMediaPlayer.zip",
+        "size_bytes": 56584738,
+        "sha256": "3a209c0be4934fd712a90bc7295575ae8c74b4a5402f6925efbab6fcacfdb223"
+      },
+      "manifest": "offline/phase3/media-player-files.sha256",
+      "manifest_sha256": "e50d49ca0ab7df798e426c643385f8aff08d7748f9fbbfbad864eef4fa83455f",
+      "program_files": 130,
+      "program_bytes": 121379412,
+      "executable_sha256": "fd96ef1cecd9188cf1c5aaf2fea055e5a89f348c90c080522435c379bfe3086f",
+      "debian_runtime_manifest": "offline/phase2/runtime-debs/SHA256SUMS",
+      "debian_parser_source_manifest": "offline/phase2/media-parser-debs/SHA256SUMS",
+      "verified_codecs": ["H.264", "AAC"]
+    },
     "bootstrapper": {
       "path": "LineInst.exe",
       "size_bytes": 903088,
@@ -340,6 +359,11 @@
         "path": "patches/0004-dwrite-legacy-qt-color-glyph-run.patch",
         "size_bytes": 2276,
         "sha256": "b7206f750d1187931f92ecf9624c3f4826330acfbc493ee34c35acbb91a9c799"
+      },
+      {
+        "path": "patches/0005-winex11-line-shadow-stacking.patch",
+        "size_bytes": 2286,
+        "sha256": "1c843b23219fc173477ce956077498d9a374fe04084c5a505d016ad9d39c0545"
       }
     ]
   },

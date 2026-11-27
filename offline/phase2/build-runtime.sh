@@ -27,7 +27,8 @@ tar -xJf "$base_archive" --strip-components=1 -C "$work/$base"
 test -x "$work/$base/bin/wine"
 
 bash "$project/scripts/build_wine_dlls.sh"
-LINE_RUNNERS_DIR="$work" bash "$project/scripts/build_line_runner.sh"
+bash "$project/scripts/build_wine_x11_driver.sh" "$work/$base" "$work/x11-build"
+LINE_RUNNERS_DIR="$work" LINE_WITH_WINEX11=1 bash "$project/scripts/build_line_runner.sh"
 
 mv -T -- "$work/$runner" "$work/wine"
 tar --format=gnu --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \

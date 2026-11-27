@@ -11,6 +11,11 @@ test -f "$prefix/system.reg" && test -d "$prefix/drive_c/windows/syswow64" || {
   exit 1
 }
 (cd "$payload" && sha256sum --quiet -c SHA256SUMS)
+media_bundle=$payload/line-media-player/1.2.0.662
+if test ! -f "$media_bundle/LineMediaPlayer.exe"; then
+  echo 'The offline media player is missing. Use the current LINE payload.' >&2
+  exit 1
+fi
 
 thai_fonts=$payload/fonts/thai
 if test ! -d "$thai_fonts"; then
@@ -59,6 +64,9 @@ cp -a --remove-destination "$payload/line/bin/." "$line_dir/bin/"
 if test ! -e "$line_dir/Data/installLang.ini"; then
   install -m 644 "$payload/line/Data/installLang.ini" "$line_dir/Data/installLang.ini"
 fi
+media_dir=$line_dir/Data/plugin/LineMediaPlayer/1.2.0.662
+mkdir -p "$media_dir"
+cp -a --remove-destination "$media_bundle/." "$media_dir/"
 chmod 000 "$line_dir/bin/$version/LineUpdater.exe"
 
 install -d "$windows/Fonts"
