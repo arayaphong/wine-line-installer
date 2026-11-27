@@ -101,7 +101,7 @@ base runner untouched, files hard-linked, replaced files unlinked first).
 | Win11 dwmapi talks to DWM over ALPC | `NtAlpc*` stubs → STATUS_NOT_IMPLEMENTED | binary stubs, i386 ntdll |
 | Win11 dwmapi private user32 APIs (`IsThreadDesktopComposited`, `IsTopLevelWindow`, `GetWindowCompositionAttribute`, `DwmGetDxSharedSurface`) | stubs returning FALSE/0 | binary stubs, i386 user32 |
 | Win7 winhttp imports `dnsapi.DnsGetProxyInformation`/`DnsFreeProxyName` | stubs (ERROR_CALL_NOT_IMPLEMENTED / void) | binary stubs, i386 dnsapi |
-| Win7 SP1 winhttp offers only SSL3/TLS1.0 → LINE CDN refuses | KB3140245 winhttp/webio (5.1.7601.23375) + `DefaultSecureProtocols=0xA80` | genuine MS update, `install_ms_dlls.sh` |
+| Win7 SP1 winhttp offers only SSL3/TLS1.0 → LINE CDN refuses | KB3140245 winhttp/webio (6.1.7601.23375) + `DefaultSecureProtocols=0xA80` | genuine MS update, `install_ms_dlls.sh` |
 | After TLS handshake winhttp asks `SECPKG_ATTR_ENDPOINT_BINDINGS`; cert is `ecdsa-with-SHA384` whose OID info Algid is `CALG_OID_INFO_CNG_ONLY` → `CryptHashCertificate(0xffffffff)` fails → winhttp drops the connection (ERROR_WINHTTP_CANNOT_CONNECT 12029) | map CNG hash name (SHA384/SHA512) to CALG | source, `patches/0003` (secur32) |
 
 KB3140245 x86 (`ms-dlls/source/…msu`, sha1 cdafb409…) stores winhttp/webio as PA30 intra-package deltas

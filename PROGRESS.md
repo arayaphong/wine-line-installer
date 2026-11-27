@@ -42,7 +42,7 @@ Last updated: 2026-11-27
    | gdiplus | Win7 SP1 | catalog foundation-package (SP1) |
    | dwmapi | Win11 26100.9457 | ฝังในไฟล์ |
    | msimg32 | Win11 26100.9457 | catalog Client-Desktop-Required-WOW64 (Win11) |
-   | winhttp, webio | KB3140245 (5.1.7601.23375) | catalog package_1_for_kb3140245 |
+   | winhttp, webio | KB3140245 (6.1.7601.23375) | catalog package_1_for_kb3140245 |
 3. **registry:** `DefaultSecureProtocols=0xA80` (TLS 1.0–1.2) สำหรับ winhttp
 
 ## ทำงานต่อ
